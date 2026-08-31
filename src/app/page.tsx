@@ -171,7 +171,7 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={S.label}>Service Area</div>
           <p style={{ ...S.body, marginBottom: '1.5rem', maxWidth: '58ch' }}>
-            We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Lafayette to Jeffersonville, Fort Wayne to Bloomington.
+            We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Indianapolis to Lafayette to Terre Haute. Fort Wayne to Bloomington to Jeffersonville.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
             {['Indianapolis', 'Greenwood', 'Carmel', 'Fishers', 'Lawrence', 'Beech Grove', 'Speedway', 'Plainfield', 'Avon', 'Brownsburg', 'Noblesville', 'Anderson', 'Columbus', 'Bloomington', 'Jeffersonville', 'Lafayette', 'Fort Wayne', 'Greenfield', 'Richmond'].map(city => (
