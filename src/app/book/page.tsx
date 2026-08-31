@@ -153,7 +153,7 @@ export default function BookingPage() {
                 <Field label="Pickup Date" required>
                   <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </Field>
-                <Field label="Pickup Time" required>
+                <Field label="Appt / Drop-off Time" required>
                   <div style={{ display: 'flex', gap: '.4rem' }}>
                     <select
                       required
