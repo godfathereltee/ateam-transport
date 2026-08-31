@@ -76,8 +76,8 @@ export default function Home() {
             ].map(s => (
               <div key={s.title} style={{ background: 'var(--bg-panel)', padding: '1.75rem 1.5rem' }}>
                 <div style={{ width: '2rem', height: '2px', background: 'var(--accent)', marginBottom: '1rem' }} />
-                <div style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '.6rem', fontSize: '.95rem' }}>{s.title}</div>
-                <div style={{ color: 'var(--text-2)', fontSize: '.87rem', lineHeight: 1.7 }}>{s.desc}</div>
+                <div style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '.6rem', fontSize: '1.15rem' }}>{s.title}</div>
+                <div style={{ color: 'var(--text-2)', fontSize: '1rem', lineHeight: 1.7 }}>{s.desc}</div>
               </div>
             ))}
           </div>
@@ -89,7 +89,7 @@ export default function Home() {
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.75rem' }}>Est. October 2016 · Celebrating 10 Years of Service</div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.25rem)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '1rem', letterSpacing: '-.02em', maxWidth: '20ch' }}>The original. Still the standard.</h2>
-          <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '.95rem', maxWidth: '58ch', marginBottom: '0' }}>
+          <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1.05rem', maxWidth: '58ch', marginBottom: '0' }}>
             A-TEAM Transport was founded by a disabled veteran with one mission: move patients safely, every time, no exceptions. This October, we celebrate 10 years of doing exactly that — a decade of trusted relationships, thousands of safe trips, and a standard that has never wavered. Thank you, Central Indiana, for trusting us with the people who matter most.
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function Home() {
       <section style={{ padding: '3.5rem 1.5rem', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-3)', marginBottom: '1.75rem' }}>Service Area</div>
-          <p style={{ color: 'var(--text-2)', fontSize: '.95rem', lineHeight: 1.8, marginBottom: '1.5rem', maxWidth: '58ch' }}>
+          <p style={{ color: 'var(--text-2)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '1.5rem', maxWidth: '58ch' }}>
             We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Lafayette to Jeffersonville, Fort Wayne to Bloomington.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
@@ -143,12 +143,12 @@ export default function Home() {
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.75rem' }}>Ready to schedule?</div>
           <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 700, color: 'var(--text)', marginBottom: '.75rem', letterSpacing: '-.02em' }}>Submit online or call us directly.</h2>
-          <p style={{ color: 'var(--text-2)', marginBottom: '2rem', fontSize: '.95rem', lineHeight: 1.75, maxWidth: '50ch' }}>We confirm trip requests within 30 minutes during business hours. For urgent trips, call us directly.</p>
+          <p style={{ color: 'var(--text-2)', marginBottom: '2rem', fontSize: '1.05rem', lineHeight: 1.75, maxWidth: '50ch' }}>We confirm trip requests within 30 minutes during business hours. For urgent trips, call us directly.</p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '.95rem' }}>
+            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1.05rem' }}>
               Request Online →
             </Link>
-            <a href="tel:3179827417" style={{ border: '1px solid var(--border)', color: 'var(--text)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.95rem', background: 'var(--bg)' }}>
+            <a href="tel:3179827417" style={{ border: '1px solid var(--border)', color: 'var(--text)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '1.05rem', background: 'var(--bg)' }}>
               Call (317) 982-7417
             </a>
           </div>

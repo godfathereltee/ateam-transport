@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
-/* Light mode — Pearl White */
+/* Light mode — White background, Royal Blue type */
 :root {
-  --bg: #EEF2FF;
-  --bg-panel: #F8F9FF;
-  --border: #C0CBF0;
-  --text: #080F30;
-  --text-2: #3A456E;
-  --text-3: #7A85AA;
+  --bg: #FFFFFF;
+  --bg-panel: #EEF2FF;
+  --border: #B8C8F0;
+  --text: #060E36;
+  --text-2: #1A2D7A;
+  --text-3: #4A5A9A;
   --accent: #B87214;
   --accent-fg: #ffffff;
   --crit: #B03020;
@@ -15,15 +15,15 @@
   --warn: #8A6010;
 }
 
-/* Dark mode — Royal Blue */
+/* Dark mode — Royal Blue background, bright white type */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #060E36;
     --bg-panel: #0C1750;
     --border: #1A2A6E;
-    --text: #EEF0FF;
-    --text-2: #A8B4E0;
-    --text-3: #5A68A0;
+    --text: #FFFFFF;
+    --text-2: #C8D4F8;
+    --text-3: #6878B8;
     --accent: #E89818;
     --accent-fg: #060E36;
     --crit: #D44535;
@@ -36,9 +36,9 @@
   --bg: #060E36;
   --bg-panel: #0C1750;
   --border: #1A2A6E;
-  --text: #EEF0FF;
-  --text-2: #A8B4E0;
-  --text-3: #5A68A0;
+  --text: #FFFFFF;
+  --text-2: #C8D4F8;
+  --text-3: #6878B8;
   --accent: #E89818;
   --accent-fg: #060E36;
   --crit: #D44535;
@@ -51,6 +51,10 @@ body {
   color: var(--text);
   font-family: var(--font-sans, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.7;
 }
+
+h1, h2, h3 { line-height: 1.1; letter-spacing: -.02em; }
 
 * { box-sizing: border-box; }
