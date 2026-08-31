@@ -39,6 +39,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Van photo */}
+      <section style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg)', padding: 0, overflow: 'hidden' }}>
+        <img
+          src="/van.png"
+          alt="A-TEAM Transport wheelchair-accessible van with rear ramp deployed"
+          style={{ width: '100%', display: 'block', maxHeight: '520px', objectFit: 'cover', objectPosition: 'center' }}
+        />
+      </section>
+
       {/* Stats strip */}
       <section style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-panel)' }}>
         <div style={{ ...S.wrap, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
