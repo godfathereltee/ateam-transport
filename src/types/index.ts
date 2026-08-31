@@ -1,24 +1,38 @@
-export type ServiceType = 'wheelchair' | 'stretcher' | 'ambulatory'
+export type TransportType =
+  | 'standard_wheelchair'
+  | 'bariatric_wheelchair'
+  | 'stretcher'
+  | 'ambulatory'
+
+export type TripType = 'one_way' | 'round_trip'
 
 export type BookingStatus = 'pending' | 'confirmed' | 'dispatched' | 'completed' | 'cancelled'
 
 export interface BookingRequest {
   id?: string
-  facility_name: string
+  // Requester
   facility_contact_name: string
   facility_contact_phone: string
-  facility_contact_email?: string
-  patient_initials: string // PHI-minimal: initials only at booking stage
-  service_type: ServiceType
+  facility_name: string
+  confirmation_email?: string
+  // Patient
+  patient_name: string
+  patient_weight?: string
+  // Transport
+  transport_type: TransportType
+  trip_type: TripType
   pickup_date: string
   pickup_time: string
+  // Pickup
   pickup_address: string
-  destination_name: string
+  pickup_stairs: boolean
+  pickup_notes?: string
+  // Drop-off
   destination_address: string
+  dropoff_stairs: boolean
+  dropoff_notes?: string
+  // Special
   oxygen_required: boolean
-  bariatric: boolean
-  stairs: boolean
-  notes?: string
   status: BookingStatus
   created_at?: string
 }
@@ -30,7 +44,7 @@ export interface Facility {
   contact_name?: string
   contact_phone?: string
   contact_email?: string
-  priority_rank: number // 1–62 outreach order
+  priority_rank: number
   status: 'active' | 'consistent' | 'historical'
   last_trip_date?: string
   engagement_status?: 'not_contacted' | 'contacted' | 'responded' | 'visit_scheduled' | 'reactivated'

@@ -2,30 +2,33 @@
 
 import { useState } from 'react'
 import Nav from '@/components/Nav'
-import type { BookingRequest, ServiceType } from '@/types'
+import type { BookingRequest, TransportType, TripType } from '@/types'
 
-const SERVICE_LABELS: Record<ServiceType, string> = {
-  ambulatory: 'Ambulatory (Walking)',
-  wheelchair: 'Wheelchair',
-  stretcher: 'Stretcher / Cot',
-}
+const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
+  { value: 'standard_wheelchair', label: 'Standard Wheelchair (up to 250 lbs)' },
+  { value: 'bariatric_wheelchair', label: 'Bariatric Wheelchair (250+ lbs)' },
+  { value: 'stretcher', label: 'Stretcher' },
+  { value: 'ambulatory', label: 'Ambulatory (Walking)' },
+]
 
 const initialState: Omit<BookingRequest, 'status'> = {
-  facility_name: '',
   facility_contact_name: '',
   facility_contact_phone: '',
-  facility_contact_email: '',
-  patient_initials: '',
-  service_type: 'wheelchair',
+  facility_name: '',
+  confirmation_email: '',
+  patient_name: '',
+  patient_weight: '',
+  transport_type: 'standard_wheelchair',
+  trip_type: 'one_way',
   pickup_date: '',
   pickup_time: '',
   pickup_address: '',
-  destination_name: '',
+  pickup_stairs: false,
+  pickup_notes: '',
   destination_address: '',
+  dropoff_stairs: false,
+  dropoff_notes: '',
   oxygen_required: false,
-  bariatric: false,
-  stairs: false,
-  notes: '',
 }
 
 export default function BookingPage() {
@@ -41,7 +44,7 @@ export default function BookingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.pickup_time) { setError('Please select an Appt / Drop-off Time.'); return }
+    if (!form.pickup_time) { setError('Please select a Pickup Time.'); return }
     setSubmitting(true)
     setError('')
     try {
@@ -66,8 +69,7 @@ export default function BookingPage() {
           <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--pos)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', fontSize: '1.5rem' }}>✓</div>
           <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: '1.5rem', fontWeight: 600, color: 'var(--text)', marginBottom: '.75rem' }}>Trip Request Received</h1>
           <p style={{ color: 'var(--text-2)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-            We&apos;ll confirm this trip within 30 minutes during business hours.
-            For urgent requests, call us directly.
+            We&apos;ll confirm this trip within 30 minutes during business hours. For urgent requests, call us directly.
           </p>
           <a href="tel:3179827417" style={{ display: 'inline-block', background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.75rem 1.5rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.9rem' }}>
             Call (317) 982-7417
@@ -88,59 +90,82 @@ export default function BookingPage() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)', padding: '0 0 4rem' }}>
       <Nav />
+      <style>{`
+        input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],input[type=number],textarea,select {
+          background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);
+          font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;
+        }
+        input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+        input::placeholder,textarea::placeholder{color:var(--text-3)}
+        input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}
+        input[type=date],input[type=time]{cursor:pointer;}
+      `}</style>
 
       <div style={{ maxWidth: '680px', margin: '0 auto', padding: '2rem 1.5rem 0' }}>
         <p style={{ color: 'var(--text-2)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.95rem' }}>
           Serving Central Indiana since October 2016. Complete the form below and we&apos;ll confirm your trip within 30 minutes during business hours.
         </p>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 
-          {/* FACILITY INFO */}
+          {/* REQUESTER INFO */}
           <section>
-            <SectionLabel>Facility Information</SectionLabel>
+            <SectionLabel>Requester Information</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <Field label="Facility Name" required>
-                <input required value={form.facility_name} onChange={e => set('facility_name', e.target.value)} placeholder="Greenwood Meadows" />
-              </Field>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.75rem' }}>
-                <Field label="Your Name" required>
-                  <input required value={form.facility_contact_name} onChange={e => set('facility_contact_name', e.target.value)} placeholder="Jane Smith" />
+                <Field label="Requester Name" required>
+                  <input required value={form.facility_contact_name} onChange={e => set('facility_contact_name', e.target.value)} placeholder="Jane Doe" />
                 </Field>
-                <Field label="Your Phone" required>
-                  <input required type="tel" value={form.facility_contact_phone} onChange={e => set('facility_contact_phone', e.target.value)} placeholder="(317) 555-0100" />
+                <Field label="Requester Phone Number" required>
+                  <input required type="tel" value={form.facility_contact_phone} onChange={e => set('facility_contact_phone', e.target.value)} placeholder="(812) 123-4567" />
                 </Field>
               </div>
-              <Field label="Your Email (optional — for confirmation)">
-                <input type="email" value={form.facility_contact_email} onChange={e => set('facility_contact_email', e.target.value)} placeholder="jane@greenwoodmeadows.com" />
+              <Field label="Requesting Facility Name (if applicable)">
+                <input value={form.facility_name} onChange={e => set('facility_name', e.target.value)} placeholder="Bloomington Regional Rehabilitation Hospital" />
+              </Field>
+              <Field label="Trip Confirmation Email (optional)">
+                <input type="email" value={form.confirmation_email} onChange={e => set('confirmation_email', e.target.value)} placeholder="dispatch@facility.com" />
               </Field>
             </div>
           </section>
 
-          {/* SERVICE TYPE */}
+          {/* PATIENT INFO */}
           <section>
-            <SectionLabel>Service Type</SectionLabel>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '.5rem' }}>
-              {(Object.entries(SERVICE_LABELS) as [ServiceType, string][]).map(([val, label]) => (
+            <SectionLabel>Patient Information</SectionLabel>
+            <div style={{ display: 'grid', gap: '.75rem' }}>
+              <Field label="Patient Name" required>
+                <input required value={form.patient_name} onChange={e => set('patient_name', e.target.value)} placeholder="Robert Mathis" />
+              </Field>
+              <Field label="Patient Weight (lbs)">
+                <input type="number" value={form.patient_weight} onChange={e => set('patient_weight', e.target.value)} placeholder="150" style={{ maxWidth: '160px' }} />
+              </Field>
+            </div>
+          </section>
+
+          {/* TRANSPORT TYPE */}
+          <section>
+            <SectionLabel>Type of Transport</SectionLabel>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem' }}>
+              {TRANSPORT_OPTIONS.map(opt => (
                 <button
-                  key={val}
+                  key={opt.value}
                   type="button"
-                  onClick={() => set('service_type', val)}
+                  onClick={() => set('transport_type', opt.value)}
                   style={{
-                    padding: '.75rem .5rem',
+                    padding: '.75rem .75rem',
                     borderRadius: '4px',
-                    border: form.service_type === val ? '2px solid var(--accent)' : '1px solid var(--border)',
-                    background: form.service_type === val ? 'var(--accent)' : 'var(--bg-panel)',
-                    color: form.service_type === val ? 'var(--accent-fg)' : 'var(--text-2)',
+                    border: form.transport_type === opt.value ? '2px solid var(--accent)' : '1px solid var(--border)',
+                    background: form.transport_type === opt.value ? 'var(--accent)' : 'var(--bg-panel)',
+                    color: form.transport_type === opt.value ? 'var(--accent-fg)' : 'var(--text-2)',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '.82rem',
-                    fontWeight: form.service_type === val ? 600 : 400,
+                    fontWeight: form.transport_type === opt.value ? 600 : 400,
                     cursor: 'pointer',
-                    textAlign: 'center',
-                    lineHeight: 1.3,
+                    textAlign: 'left',
+                    lineHeight: 1.35,
                   }}
                 >
-                  {label}
+                  {opt.label}
                 </button>
               ))}
             </div>
@@ -150,49 +175,59 @@ export default function BookingPage() {
           <section>
             <SectionLabel>Trip Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <Field label="Patient Initials" required hint="Initials only — e.g. J.D.">
-                <input required value={form.patient_initials} onChange={e => set('patient_initials', e.target.value)} placeholder="J.D." maxLength={6} style={{ maxWidth: '120px' }} />
+              <Field label="Trip Type" required>
+                <div style={{ display: 'flex', gap: '.5rem' }}>
+                  {([['one_way','One-Way'],['round_trip','Round Trip']] as [TripType,string][]).map(([val, label]) => (
+                    <button key={val} type="button" onClick={() => set('trip_type', val)}
+                      style={{
+                        flex: 1, padding: '.65rem', borderRadius: '4px',
+                        border: form.trip_type === val ? '2px solid var(--accent)' : '1px solid var(--border)',
+                        background: form.trip_type === val ? 'var(--accent)' : 'var(--bg-panel)',
+                        color: form.trip_type === val ? 'var(--accent-fg)' : 'var(--text-2)',
+                        fontFamily: 'var(--font-sans)', fontSize: '.88rem',
+                        fontWeight: form.trip_type === val ? 600 : 400, cursor: 'pointer',
+                      }}>{label}</button>
+                  ))}
+                </div>
               </Field>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.75rem' }}>
-                <Field label="Pickup Date" required>
+                <Field label="Date of Transport" required>
                   <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </Field>
-                <Field label="Appt / Drop-off Time" required>
+                <Field label="Requested Pickup Time" required>
                   <input type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
                 </Field>
               </div>
-              <Field label="Pickup Address" required>
-                <input required value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="1234 Facility Drive, Indianapolis, IN 46240" />
-              </Field>
-              <Field label="Destination Name" required>
-                <input required value={form.destination_name} onChange={e => set('destination_name', e.target.value)} placeholder="IU Health Methodist Hospital" />
-              </Field>
-              <Field label="Destination Address" required>
-                <input required value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="1701 N Senate Blvd, Indianapolis, IN 46202" />
-              </Field>
-            </div>
-          </section>
-
-          {/* SPECIAL NEEDS */}
-          <section>
-            <SectionLabel>Special Requirements</SectionLabel>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
               <CheckRow label="Oxygen required" checked={form.oxygen_required} onChange={v => set('oxygen_required', v)} />
-              <CheckRow label="Bariatric transport needed" checked={form.bariatric} onChange={v => set('bariatric', v)} />
-              <CheckRow label="Stairs involved at pickup or destination" checked={form.stairs} onChange={v => set('stairs', v)} />
             </div>
           </section>
 
-          {/* NOTES */}
+          {/* PICKUP */}
           <section>
-            <SectionLabel>Additional Notes (optional)</SectionLabel>
-            <textarea
-              value={form.notes}
-              onChange={e => set('notes', e.target.value)}
-              rows={3}
-              placeholder="Any additional information that would help our team..."
-              style={{ width: '100%', ...inputStyle }}
-            />
+            <SectionLabel>Pickup Details</SectionLabel>
+            <div style={{ display: 'grid', gap: '.75rem' }}>
+              <Field label="Pickup Address" required>
+                <input required value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="BRRH, 3050 N. Lintel Drive, Bloomington, IN 47404" />
+              </Field>
+              <CheckRow label="Are there stairs at the pickup location?" checked={form.pickup_stairs} onChange={v => set('pickup_stairs', v)} />
+              <Field label="Pickup Notes (room number, entrance, etc.)">
+                <textarea value={form.pickup_notes} onChange={e => set('pickup_notes', e.target.value)} rows={2} placeholder="Pt is in room 205. Pick up at the front entrance." />
+              </Field>
+            </div>
+          </section>
+
+          {/* DROP-OFF */}
+          <section>
+            <SectionLabel>Drop-Off Details</SectionLabel>
+            <div style={{ display: 'grid', gap: '.75rem' }}>
+              <Field label="Drop-Off Address" required>
+                <input required value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="Glenburn Senior Living, 618 Glenburn Rd, Linton, IN 47441" />
+              </Field>
+              <CheckRow label="Are there stairs at the drop-off location?" checked={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
+              <Field label="Drop-Off Notes">
+                <textarea value={form.dropoff_notes} onChange={e => set('dropoff_notes', e.target.value)} rows={2} placeholder="Pt may be dropped off at the front entrance." />
+              </Field>
+            </div>
           </section>
 
           {error && (
@@ -230,20 +265,6 @@ export default function BookingPage() {
   )
 }
 
-// ── Small components ──────────────────────────────────────────
-
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  padding: '.65rem .8rem',
-  background: 'var(--bg-panel)',
-  border: '1px solid var(--border)',
-  borderRadius: '4px',
-  color: 'var(--text)',
-  fontFamily: 'var(--font-sans)',
-  fontSize: '.9rem',
-  outline: 'none',
-}
-
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem', marginBottom: '.85rem' }}>
@@ -255,14 +276,12 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Field({ label, children, required, hint }: { label: string; children: React.ReactNode; required?: boolean; hint?: string }) {
+function Field({ label, children, required }: { label: string; children: React.ReactNode; required?: boolean }) {
   return (
     <div>
       <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 500, color: 'var(--text-2)', marginBottom: '.35rem' }}>
         {label}{required && <span style={{ color: 'var(--crit)', marginLeft: '.2rem' }}>*</span>}
       </label>
-      {hint && <div style={{ fontSize: '.73rem', color: 'var(--text-3)', marginBottom: '.3rem' }}>{hint}</div>}
-      <style>{`input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea,select{background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;}input:focus,textarea:focus{border-color:var(--accent);}input::placeholder,textarea::placeholder{color:var(--text-3)}input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}input[type=date],input[type=time]{cursor:pointer;}`}</style>
       {children}
     </div>
   )
