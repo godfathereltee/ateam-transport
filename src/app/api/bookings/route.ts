@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const booking: BookingRequest = await req.json()
 
     const required = ['facility_contact_name', 'facility_contact_phone', 'patient_name',
-      'transport_type', 'trip_type', 'pickup_date', 'pickup_time',
+      'transport_type', 'trip_type', 'pickup_date',
       'pickup_address', 'destination_address']
     for (const field of required) {
       if (!booking[field as keyof BookingRequest]) {
@@ -46,7 +46,8 @@ TRIP DETAILS
 Type of Transport:      ${transportLabel}
 Trip Type:              ${tripLabel}
 Date of Transport:      ${booking.pickup_date}
-Requested Pickup Time:  ${booking.pickup_time}
+Appointment Time:       ${booking.appt_time || 'N/A'}
+Requested Pickup Time:  ${booking.pickup_time || 'N/A'}
 Oxygen Required:        ${booking.oxygen_required ? 'Yes' : 'No'}
 
 PICKUP
@@ -72,7 +73,8 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
       transport_type: booking.transport_type,
       trip_type: booking.trip_type,
       pickup_date: booking.pickup_date,
-      pickup_time: booking.pickup_time,
+      appt_time: booking.appt_time || null,
+      pickup_time: booking.pickup_time || null,
       pickup_address: booking.pickup_address,
       pickup_stairs: booking.pickup_stairs,
       pickup_notes: booking.pickup_notes || null,

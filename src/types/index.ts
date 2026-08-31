@@ -22,6 +22,7 @@ export interface BookingRequest {
   transport_type: TransportType
   trip_type: TripType
   pickup_date: string
+  appt_time?: string
   pickup_time: string
   // Pickup
   pickup_address: string

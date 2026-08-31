@@ -21,6 +21,7 @@ const initialState: Omit<BookingRequest, 'status'> = {
   transport_type: 'standard_wheelchair',
   trip_type: 'one_way',
   pickup_date: '',
+  appt_time: '',
   pickup_time: '',
   pickup_address: '',
   pickup_stairs: false,
@@ -44,7 +45,7 @@ export default function BookingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.pickup_time) { setError('Please select a Pickup Time.'); return }
+    if (!form.appt_time && !form.pickup_time) { setError('Please enter an Appointment Time or a Requested Pickup Time.'); return }
     setSubmitting(true)
     setError('')
     try {
@@ -194,10 +195,13 @@ export default function BookingPage() {
                 <Field label="Date of Transport" required>
                   <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </Field>
-                <Field label="Requested Pickup Time" required>
-                  <input type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
+                <Field label="Appointment Time">
+                  <input type="time" value={form.appt_time ?? ''} onChange={e => set('appt_time', e.target.value)} style={{ colorScheme: 'dark' }} />
                 </Field>
               </div>
+              <Field label="Requested Pickup Time (if appt time not applicable)">
+                <input type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
+              </Field>
               <CheckRow label="Oxygen required" checked={form.oxygen_required} onChange={v => set('oxygen_required', v)} />
             </div>
           </section>
