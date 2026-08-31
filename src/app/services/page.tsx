@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Nav from '@/components/Nav'
 
 const services = [
   {
@@ -22,21 +23,7 @@ export default function ServicesPage() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
-      {/* Header */}
-      <header style={{ background: 'var(--bg-panel)', borderBottom: '1px solid var(--border)', padding: '1rem 1.5rem', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-          <div>
-            <Link href="/" style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', textDecoration: 'none', display: 'block', marginBottom: '.1rem' }}>← A-TEAM Transport Services</Link>
-            <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text)' }}>Our Services</div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <a href="tel:3179827417" style={{ fontFamily: 'var(--font-mono)', fontSize: '.78rem', color: 'var(--text-2)', textDecoration: 'none' }}>(317) 982-7417</a>
-            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.5rem 1.1rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.85rem', whiteSpace: 'nowrap' }}>
-              Request a Trip
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Nav />
 
       {/* Page hero */}
       <section style={{ padding: '4rem 1.5rem 3rem', borderBottom: '1px solid var(--border)' }}>

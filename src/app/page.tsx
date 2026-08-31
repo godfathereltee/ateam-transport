@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Nav from '@/components/Nav'
 
 const S = {
   label: { fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase' as const, color: 'var(--text-3)', marginBottom: '1.75rem' },
@@ -14,24 +15,7 @@ export default function Home() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
-      {/* Nav */}
-      <nav style={{ background: 'var(--bg-panel)', borderBottom: '1px solid var(--border)', padding: '1rem 1.5rem', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ ...S.wrap, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-          <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.1rem' }}>Veteran-Owned · Indianapolis, IN</div>
-            <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text)', letterSpacing: '-.01em' }}>A-TEAM Transport Services</div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-            <Link href="/services" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>Services</Link>
-            <Link href="/faq" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>FAQ</Link>
-            <Link href="/join" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>Join</Link>
-            <a href="tel:3179827417" style={{ fontFamily: 'var(--font-mono)', fontSize: '.78rem', color: 'var(--text-2)', textDecoration: 'none' }}>(317) 982-7417</a>
-            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.5rem 1.1rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.85rem', whiteSpace: 'nowrap' }}>
-              Request a Trip
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Hero */}
       <section style={{ padding: '5rem 1.5rem 4rem', borderBottom: '1px solid var(--border)' }}>

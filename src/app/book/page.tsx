@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Nav from '@/components/Nav'
 import type { BookingRequest, ServiceType } from '@/types'
 
 const SERVICE_LABELS: Record<ServiceType, string> = {
@@ -82,18 +83,7 @@ export default function BookingPage() {
 
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)', padding: '0 0 4rem' }}>
-      {/* Header */}
-      <header style={{ background: 'var(--bg-panel)', borderBottom: '1px solid var(--border)', padding: '1rem 1.5rem' }}>
-        <div style={{ maxWidth: '680px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-          <div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.65rem', letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.2rem' }}>A-TEAM Transport Services</div>
-            <div style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--text)' }}>Request a Trip</div>
-          </div>
-          <a href="tel:3179827417" style={{ fontFamily: 'var(--font-mono)', fontSize: '.8rem', color: 'var(--text-2)', textDecoration: 'none' }}>
-            (317) 982-7417
-          </a>
-        </div>
-      </header>
+      <Nav />
 
       <div style={{ maxWidth: '680px', margin: '0 auto', padding: '2rem 1.5rem 0' }}>
         <p style={{ color: 'var(--text-2)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '.95rem' }}>

@@ -1,19 +1,11 @@
 import Link from 'next/link'
+import Nav from '@/components/Nav'
 
 export default function JoinPage() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
-      {/* Header */}
-      <header style={{ background: 'var(--bg-panel)', borderBottom: '1px solid var(--border)', padding: '1rem 1.5rem', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: '960px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-          <div>
-            <Link href="/" style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', textDecoration: 'none', display: 'block', marginBottom: '.1rem' }}>← A-TEAM Transport Services</Link>
-            <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text)' }}>Join Our Team</div>
-          </div>
-          <a href="tel:3179827417" style={{ fontFamily: 'var(--font-mono)', fontSize: '.78rem', color: 'var(--text-2)', textDecoration: 'none' }}>(317) 982-7417</a>
-        </div>
-      </header>
+      <Nav />
 
       {/* Hero */}
       <section style={{ padding: '4rem 1.5rem 3.5rem', borderBottom: '1px solid var(--border)' }}>
