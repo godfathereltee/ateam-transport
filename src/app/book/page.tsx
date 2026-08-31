@@ -191,16 +191,14 @@ export default function BookingPage() {
                   ))}
                 </div>
               </Field>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.75rem' }}>
-                <Field label="Date of Transport" required>
-                  <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
-                </Field>
-                <Field label="Appointment Time">
-                  <input type="time" value={form.appt_time ?? ''} onChange={e => set('appt_time', e.target.value)} style={{ colorScheme: 'dark' }} />
-                </Field>
-              </div>
+              <Field label="Date of Transport" required>
+                <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
+              </Field>
+              <Field label="Appointment Time">
+                <TimePicker value={form.appt_time ?? ''} onChange={v => set('appt_time', v)} />
+              </Field>
               <Field label="Requested Pickup Time (if appt time not applicable)">
-                <input type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
+                <TimePicker value={form.pickup_time} onChange={v => set('pickup_time', v)} />
               </Field>
               <CheckRow label="Oxygen required" checked={form.oxygen_required} onChange={v => set('oxygen_required', v)} />
             </div>
@@ -287,6 +285,47 @@ function Field({ label, children, required }: { label: string; children: React.R
         {label}{required && <span style={{ color: 'var(--crit)', marginLeft: '.2rem' }}>*</span>}
       </label>
       {children}
+    </div>
+  )
+}
+
+function TimePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const hours = [1,2,3,4,5,6,7,8,9,10,11,12]
+  const mins = ['00','15','30','45']
+
+  // Parse existing value (HH:MM 24h) back to display parts
+  let dispHr = '', dispMin = '', dispAmpm = ''
+  if (value) {
+    const [h, m] = value.split(':')
+    const hr = parseInt(h)
+    dispHr = String(hr % 12 || 12)
+    dispMin = m
+    dispAmpm = hr < 12 ? 'AM' : 'PM'
+  }
+
+  function combine(hr: string, min: string, ampm: string) {
+    if (!hr || !min || !ampm) { onChange(''); return }
+    const h24 = ampm === 'PM' && hr !== '12' ? String(+hr + 12) : ampm === 'AM' && hr === '12' ? '00' : hr.padStart(2,'0')
+    onChange(`${h24.padStart(2,'0')}:${min}`)
+  }
+
+  const sel: React.CSSProperties = { flex: 1, padding: '.65rem .5rem', background: 'var(--bg-panel)', border: '1px solid var(--border)', borderRadius: '4px', color: dispHr ? 'var(--text)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontSize: '.9rem', outline: 'none', cursor: 'pointer' }
+
+  return (
+    <div style={{ display: 'flex', gap: '.4rem' }}>
+      <select style={sel} value={dispHr} onChange={e => combine(e.target.value, dispMin, dispAmpm)}>
+        <option value="">Hour</option>
+        {hours.map(h => <option key={h} value={String(h)}>{h}</option>)}
+      </select>
+      <select style={sel} value={dispMin} onChange={e => combine(dispHr, e.target.value, dispAmpm)}>
+        <option value="">Min</option>
+        {mins.map(m => <option key={m} value={m}>{m}</option>)}
+      </select>
+      <select style={sel} value={dispAmpm} onChange={e => combine(dispHr, dispMin, e.target.value)}>
+        <option value="">AM/PM</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
     </div>
   )
 }
