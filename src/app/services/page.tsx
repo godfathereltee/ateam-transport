@@ -82,6 +82,35 @@ export default function ServicesPage() {
         </section>
       ))}
 
+      {/* Where We Go */}
+      <section style={{ padding: '3.5rem 1.5rem', borderBottom: '1px solid var(--border)', background: 'var(--bg)' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.75rem' }}>Transport Services</div>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.25rem)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '1rem', letterSpacing: '-.02em' }}>
+            We go where you need to go.
+          </h2>
+          <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1.05rem', maxWidth: '58ch', marginBottom: '2rem' }}>
+            Medical appointments, dialysis, rehabilitation, hospital discharges — and everyday life. Saturdays, Sundays, holidays, birthdays included.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '.5rem' }}>
+            {[
+              'Medical appointments', 'Dental appointments', 'Dialysis & specialty treatments',
+              'Rehabilitation & Physical Therapy', 'Routine & follow-up care', 'Nursing facility discharges',
+              'Hospital discharges', 'Airport pick-up & drop-off', 'Ride to work',
+              'Ride to school', 'Family outings', 'Home visits with family',
+              'Everyday errands', 'Religious services', 'Funerals',
+              'Grocery trips', 'Hair appointments', 'Family dinners',
+              'Holiday gatherings', 'Birthday trips',
+            ].map(item => (
+              <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '.6rem', padding: '.6rem .75rem', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-panel)', fontSize: '.95rem', color: 'var(--text-2)' }}>
+                <span style={{ color: 'var(--accent)', fontWeight: 700, flexShrink: 0 }}>—</span>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Footer CTA */}
       <section style={{ padding: '3.5rem 1.5rem', background: 'var(--bg-panel)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>

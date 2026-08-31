@@ -117,41 +117,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services */}
-      <section style={S.sectionPanel}>
-        <div style={S.wrap}>
-          <div style={S.label}>Transport Services</div>
-          <h2 style={S.h2}>We go where you need to go.</h2>
-          <p style={{ ...S.body, maxWidth: '58ch', marginBottom: '2rem' }}>
-            Medical appointments, dialysis, rehabilitation, hospital discharges — and everyday life. Saturdays, Sundays, holidays, birthdays included.
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '.5rem' }}>
-            {[
-              'Medical appointments', 'Dental appointments', 'Dialysis & specialty treatments',
-              'Rehabilitation & Physical Therapy', 'Routine & follow-up care', 'Nursing facility discharges',
-              'Hospital discharges', 'Airport pick-up & drop-off', 'Ride to work',
-              'Ride to school', 'Family outings', 'Home visits with family',
-              'Everyday errands', 'Religious services', 'Funerals',
-              'Grocery trips', 'Hair appointments', 'Family dinners',
-              'Holiday gatherings', 'Birthday trips',
-            ].map(item => (
-              <div key={item} style={{
-                display: 'flex', alignItems: 'center', gap: '.6rem',
-                padding: '.6rem .75rem',
-                border: '1px solid var(--border)',
-                borderRadius: '4px',
-                background: 'var(--bg)',
-                fontSize: '.95rem',
-                color: 'var(--text-2)',
-              }}>
-                <span style={{ color: 'var(--accent)', fontWeight: 700, flexShrink: 0 }}>—</span>
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* A-TEAM CARES */}
       <section style={S.section}>
         <div style={S.wrap}>
