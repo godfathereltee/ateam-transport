@@ -41,6 +41,7 @@ export default function BookingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!form.pickup_time) { setError('Please select an Appt / Drop-off Time.'); return }
     setSubmitting(true)
     setError('')
     try {
@@ -157,7 +158,7 @@ export default function BookingPage() {
                   <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </Field>
                 <Field label="Appt / Drop-off Time" required>
-                  <input required type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
+                  <input type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} style={{ colorScheme: 'dark' }} />
                 </Field>
               </div>
               <Field label="Pickup Address" required>
