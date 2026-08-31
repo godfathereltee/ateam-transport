@@ -24,13 +24,13 @@ export default function Home() {
       <section style={{ padding: '5rem 1.5rem 4rem', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.65rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '1.25rem' }}>
-            Veteran-Owned · Est. October 2016
+            Veteran-Owned · Celebrating 10 Years of Service
           </div>
           <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 700, lineHeight: 1.05, color: 'var(--text)', maxWidth: '14ch', marginBottom: '1.5rem', letterSpacing: '-.02em' }}>
             When your residents need to get there safely.
           </h1>
           <p style={{ color: 'var(--text-2)', fontSize: '1.05rem', maxWidth: '52ch', lineHeight: 1.8, marginBottom: '2.5rem' }}>
-            Indianapolis&apos; original NEMT stretcher provider. Nearly a decade of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities.
+            Indianapolis&apos; original NEMT stretcher provider. Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities.
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '.01em' }}>
@@ -87,10 +87,10 @@ export default function Home() {
       {/* 10 Year */}
       <section style={{ padding: '3.5rem 1.5rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-panel)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.75rem' }}>Est. October 2016 · 10 Years Coming</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '.75rem' }}>Est. October 2016 · Celebrating 10 Years of Service</div>
           <h2 style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.25rem)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.15, marginBottom: '1rem', letterSpacing: '-.02em', maxWidth: '20ch' }}>The original. Still the standard.</h2>
           <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '.95rem', maxWidth: '58ch', marginBottom: '0' }}>
-            A-TEAM Transport was founded by a disabled veteran with one mission: move patients safely, every time, no exceptions. As we approach our 10th year in October 2026, that commitment hasn&apos;t changed — and now our technology has caught up with it.
+            A-TEAM Transport was founded by a disabled veteran with one mission: move patients safely, every time, no exceptions. This October, we celebrate 10 years of doing exactly that — a decade of trusted relationships, thousands of safe trips, and a standard that has never wavered. Thank you, Central Indiana, for trusting us with the people who matter most.
           </p>
         </div>
       </section>
