@@ -258,7 +258,7 @@ function Field({ label, children, required, hint }: { label: string; children: R
         {label}{required && <span style={{ color: 'var(--crit)', marginLeft: '.2rem' }}>*</span>}
       </label>
       {hint && <div style={{ fontSize: '.73rem', color: 'var(--text-3)', marginBottom: '.3rem' }}>{hint}</div>}
-      <style>{`input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;}input:focus,textarea:focus{border-color:var(--accent);}input::placeholder,textarea::placeholder{color:var(--text-3)}`}</style>
+      <style>{`input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;}input:focus,textarea:focus{border-color:var(--accent);}input::placeholder,textarea::placeholder{color:var(--text-3)}input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}input[type=date],input[type=time]{cursor:pointer;}`}</style>
       {children}
     </div>
   )
