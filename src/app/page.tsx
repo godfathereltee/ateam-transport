@@ -100,10 +100,10 @@ export default function Home() {
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-3)', marginBottom: '1.75rem' }}>Service Area</div>
           <p style={{ color: 'var(--text-2)', fontSize: '.95rem', lineHeight: 1.8, marginBottom: '1.5rem', maxWidth: '58ch' }}>
-            We serve skilled nursing facilities, assisted living communities, and hospitals across Central Indiana.
+            We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Lafayette to Jeffersonville, Fort Wayne to Bloomington.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
-            {['Indianapolis', 'Greenwood', 'Carmel', 'Fishers', 'Lawrence', 'Beech Grove', 'Speedway', 'Plainfield', 'Avon', 'Brownsburg', 'Noblesville', 'Anderson'].map(city => (
+            {['Indianapolis', 'Greenwood', 'Carmel', 'Fishers', 'Lawrence', 'Beech Grove', 'Speedway', 'Plainfield', 'Avon', 'Brownsburg', 'Noblesville', 'Anderson', 'Columbus', 'Bloomington', 'Jeffersonville', 'Lafayette', 'Fort Wayne', 'Greenfield', 'Richmond'].map(city => (
               <span key={city} style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '.68rem',
