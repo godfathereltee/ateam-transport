@@ -289,39 +289,36 @@ function Field({ label, children, required }: { label: string; children: React.R
   )
 }
 
-function TimePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  const hours = [1,2,3,4,5,6,7,8,9,10,11,12]
-  const mins = ['00','15','30','45']
+function TimePicker({ onChange }: { value: string; onChange: (v: string) => void }) {
+  const [hr, setHr] = useState('')
+  const [min, setMin] = useState('')
+  const [ampm, setAmpm] = useState('')
 
-  // Parse existing value (HH:MM 24h) back to display parts
-  let dispHr = '', dispMin = '', dispAmpm = ''
-  if (value) {
-    const [h, m] = value.split(':')
-    const hr = parseInt(h)
-    dispHr = String(hr % 12 || 12)
-    dispMin = m
-    dispAmpm = hr < 12 ? 'AM' : 'PM'
+  function emit(h: string, m: string, ap: string) {
+    if (h && m && ap) {
+      const h24 = ap === 'PM' && h !== '12' ? String(+h + 12) : ap === 'AM' && h === '12' ? '00' : h.padStart(2, '0')
+      onChange(`${h24.padStart(2, '0')}:${m}`)
+    }
   }
 
-  function combine(hr: string, min: string, ampm: string) {
-    if (!hr || !min || !ampm) { onChange(''); return }
-    const h24 = ampm === 'PM' && hr !== '12' ? String(+hr + 12) : ampm === 'AM' && hr === '12' ? '00' : hr.padStart(2,'0')
-    onChange(`${h24.padStart(2,'0')}:${min}`)
+  const sel: React.CSSProperties = {
+    flex: 1, padding: '.65rem .4rem', background: 'var(--bg-panel)',
+    border: '1px solid var(--border)', borderRadius: '4px',
+    color: 'var(--text)', fontFamily: 'var(--font-sans)',
+    fontSize: '.9rem', outline: 'none', cursor: 'pointer',
   }
-
-  const sel: React.CSSProperties = { flex: 1, padding: '.65rem .5rem', background: 'var(--bg-panel)', border: '1px solid var(--border)', borderRadius: '4px', color: dispHr ? 'var(--text)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontSize: '.9rem', outline: 'none', cursor: 'pointer' }
 
   return (
     <div style={{ display: 'flex', gap: '.4rem' }}>
-      <select style={sel} value={dispHr} onChange={e => combine(e.target.value, dispMin, dispAmpm)}>
+      <select style={sel} value={hr} onChange={e => { setHr(e.target.value); emit(e.target.value, min, ampm) }}>
         <option value="">Hour</option>
-        {hours.map(h => <option key={h} value={String(h)}>{h}</option>)}
+        {[1,2,3,4,5,6,7,8,9,10,11,12].map(h => <option key={h} value={String(h)}>{h}</option>)}
       </select>
-      <select style={sel} value={dispMin} onChange={e => combine(dispHr, e.target.value, dispAmpm)}>
+      <select style={sel} value={min} onChange={e => { setMin(e.target.value); emit(hr, e.target.value, ampm) }}>
         <option value="">Min</option>
-        {mins.map(m => <option key={m} value={m}>{m}</option>)}
+        {['00','15','30','45'].map(m => <option key={m} value={m}>{m}</option>)}
       </select>
-      <select style={sel} value={dispAmpm} onChange={e => combine(dispHr, dispMin, e.target.value)}>
+      <select style={sel} value={ampm} onChange={e => { setAmpm(e.target.value); emit(hr, min, e.target.value) }}>
         <option value="">AM/PM</option>
         <option value="AM">AM</option>
         <option value="PM">PM</option>
