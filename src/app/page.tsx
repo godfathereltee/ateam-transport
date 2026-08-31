@@ -68,6 +68,30 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Services */}
+      <section style={S.sectionPanel}>
+        <div style={S.wrap}>
+          <div style={S.label}>Our Services</div>
+          <h2 style={S.h2}>Safe, reliable transport for every need.</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '4px', overflow: 'hidden', marginTop: '1.75rem' }}>
+            {[
+              { title: 'Stretcher Transport', desc: 'For passengers unable to sit upright during transport. Cost-effective, non-emergency stretcher loading and secure transport.', href: '/services#stretcher' },
+              { title: 'Wheelchair Transport', desc: 'Proper wheelchair securement and wider entry ramp access for passengers with varying mobility devices and requirements.', href: '/services#wheelchair' },
+              { title: 'Bariatric Transport', desc: 'Wide rear-entry ramps accommodating bariatric wheelchairs and personally owned chairs that exceed standard 35–36" ramp widths.', href: '/services#bariatric' },
+            ].map(s => (
+              <a key={s.title} href={s.href} style={{ background: 'var(--bg)', padding: '1.75rem 1.5rem', textDecoration: 'none', display: 'block', transition: 'background .15s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-panel)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg)')}>
+                <div style={{ width: '2rem', height: '2px', background: 'var(--accent)', marginBottom: '1rem' }} />
+                <div style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '.6rem', fontSize: '1.1rem' }}>{s.title}</div>
+                <div style={{ color: 'var(--text-2)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '1rem' }}>{s.desc}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.65rem', letterSpacing: '.08em', color: 'var(--accent)', textTransform: 'uppercase' }}>Learn more →</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Who We Serve */}
       <section style={S.section}>
         <div style={S.wrap}>
