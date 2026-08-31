@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* Light mode — White background, Royal Blue type */
+/* Light mode — Royal Blue, white text, gold accent */
 :root {
-  --bg: #FFFFFF;
-  --bg-panel: #EEF2FF;
-  --border: #B8C8F0;
-  --text: #060E36;
-  --text-2: #1A2D7A;
-  --text-3: #4A5A9A;
-  --accent: #B87214;
-  --accent-fg: #ffffff;
-  --crit: #B03020;
-  --pos: #2A6840;
-  --warn: #8A6010;
+  --bg: #0C1A60;
+  --bg-panel: #132280;
+  --border: #1E3098;
+  --text: #FFFFFF;
+  --text-2: #C8D4F8;
+  --text-3: #6878B8;
+  --accent: #E89818;
+  --accent-fg: #060E36;
+  --crit: #D44535;
+  --pos: #3D8E56;
+  --warn: #C09020;
 }
 
-/* Dark mode — Royal Blue background, bright white type */
+/* Dark mode — deeper Royal Blue */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #060E36;
