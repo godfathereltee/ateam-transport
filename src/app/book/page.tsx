@@ -154,7 +154,52 @@ export default function BookingPage() {
                   <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </Field>
                 <Field label="Pickup Time" required>
-                  <input required type="time" value={form.pickup_time} onChange={e => set('pickup_time', e.target.value)} />
+                  <div style={{ display: 'flex', gap: '.4rem' }}>
+                    <select
+                      required
+                      value={form.pickup_time ? form.pickup_time.split(':')[0].replace(/^0/, '') || '12' : ''}
+                      onChange={e => {
+                        const [, min, ampm] = (form.pickup_time || '::AM').split(/[: ]/)
+                        const h = e.target.value
+                        const h24 = ampm === 'PM' && h !== '12' ? String(+h + 12).padStart(2,'0') : ampm === 'AM' && h === '12' ? '00' : h.padStart(2,'0')
+                        set('pickup_time', `${h24}:${min || '00'} ${ampm || 'AM'}`)
+                      }}
+                      style={{ flex: 1 }}
+                    >
+                      <option value="">Hr</option>
+                      {Array.from({length:12},(_,i)=>i+1).map(h=><option key={h} value={h}>{h}</option>)}
+                    </select>
+                    <select
+                      required
+                      value={form.pickup_time ? form.pickup_time.split(':')[1]?.split(' ')[0] || '' : ''}
+                      onChange={e => {
+                        const [h24, rest] = (form.pickup_time || '00:00 AM').split(':')
+                        const ampm = rest?.split(' ')[1] || 'AM'
+                        set('pickup_time', `${h24}:${e.target.value} ${ampm}`)
+                      }}
+                      style={{ flex: 1 }}
+                    >
+                      <option value="">Min</option>
+                      {['00','15','30','45'].map(m=><option key={m} value={m}>{m}</option>)}
+                    </select>
+                    <select
+                      required
+                      value={form.pickup_time ? (form.pickup_time.includes(' ') ? form.pickup_time.split(' ')[1] : '') : ''}
+                      onChange={e => {
+                        const [h24, minPart] = (form.pickup_time || '00:00').split(':')
+                        const min = minPart?.split(' ')[0] || '00'
+                        const ampm = e.target.value
+                        const h12 = +h24 % 12 || 12
+                        const h24new = ampm === 'PM' && h12 !== 12 ? String(h12 + 12).padStart(2,'0') : ampm === 'AM' && h12 === 12 ? '00' : String(h12).padStart(2,'0')
+                        set('pickup_time', `${h24new}:${min} ${ampm}`)
+                      }}
+                      style={{ flex: 1 }}
+                    >
+                      <option value="">AM/PM</option>
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
                 </Field>
               </div>
               <Field label="Pickup Address" required>
@@ -258,7 +303,7 @@ function Field({ label, children, required, hint }: { label: string; children: R
         {label}{required && <span style={{ color: 'var(--crit)', marginLeft: '.2rem' }}>*</span>}
       </label>
       {hint && <div style={{ fontSize: '.73rem', color: 'var(--text-3)', marginBottom: '.3rem' }}>{hint}</div>}
-      <style>{`input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea{background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;}input:focus,textarea:focus{border-color:var(--accent);}input::placeholder,textarea::placeholder{color:var(--text-3)}input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}input[type=date],input[type=time]{cursor:pointer;}`}</style>
+      <style>{`input[type=text],input[type=tel],input[type=email],input[type=date],input[type=time],textarea,select{background:var(--bg-panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--font-sans);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;}input:focus,textarea:focus{border-color:var(--accent);}input::placeholder,textarea::placeholder{color:var(--text-3)}input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}input[type=date],input[type=time]{cursor:pointer;}`}</style>
       {children}
     </div>
   )
