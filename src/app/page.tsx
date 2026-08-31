@@ -129,22 +129,26 @@ export default function Home() {
       <section style={S.section}>
         <div style={S.wrap}>
           <div style={S.accentLabel}>Our Values</div>
-          <h2 style={S.h2}>A-TEAM CARES.</h2>
+          <h2 style={S.h2}><span style={{ whiteSpace: 'nowrap' }}>A-TEAM</span> CARES.</h2>
           <p style={{ ...S.body, maxWidth: '58ch', marginBottom: '2.5rem' }}>
-            Over 10 years of service, our reviews have consistently pointed to one thing — A-TEAM drivers and staff genuinely care. So much so, we adopted it as our company-wide value system.
+            Over 10 years of service, our reviews have consistently pointed to one thing — A-TEAM drivers and staff genuinely care about every passenger they serve. So much so, we made it the foundation of everything we do. Every team member is held to the A-TEAM CARES standard, every trip, every time.
           </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '1px' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', paddingBottom: '.5rem' }}>A-TEAM</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', paddingBottom: '.5rem' }}>CARES</div>
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
             {[
-              { letter: 'C', word: 'Communication' },
-              { letter: 'A', word: 'Accountability' },
-              { letter: 'A', word: 'Attitude' },
-              { letter: 'T', word: 'Teamwork' },
-              { letter: 'R', word: 'Reliability' },
-              { letter: 'E', word: 'Engagingness' },
-              { letter: 'E', word: 'Excellence' },
-              { letter: 'A', word: 'Appearance & Presence' },
-              { letter: 'S', word: 'Selfless Service' },
-              { letter: 'M', word: 'Mastery' },
+              { letter: 'A', word: 'Accountability',       side: 'A-TEAM' },
+              { letter: 'C', word: 'Communication',        side: 'CARES' },
+              { letter: 'T', word: 'Teamwork',             side: 'A-TEAM' },
+              { letter: 'A', word: 'Attitude',             side: 'CARES' },
+              { letter: 'E', word: 'Engagingness',         side: 'A-TEAM' },
+              { letter: 'R', word: 'Reliability',          side: 'CARES' },
+              { letter: 'A', word: 'Appearance & Presence',side: 'A-TEAM' },
+              { letter: 'E', word: 'Excellence',           side: 'CARES' },
+              { letter: 'M', word: 'Mastery',              side: 'A-TEAM' },
+              { letter: 'S', word: 'Selfless Service',     side: 'CARES' },
             ].map((v, i) => (
               <div key={i} style={{ background: 'var(--bg-panel)', padding: '1.1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)', minWidth: '2rem', textAlign: 'center' }}>{v.letter}</div>
