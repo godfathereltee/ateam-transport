@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { BookingRequest } from '@/types'
 import { supabase } from '@/lib/supabase'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   try {
@@ -69,8 +72,12 @@ ${booking.notes ? `\nNotes: ${booking.notes}` : ''}
       return NextResponse.json({ error: 'Failed to save booking' }, { status: 500 })
     }
 
-    // TODO: When email/SMS is configured (Resend or Twilio) — send owner notification
-    // await sendOwnerNotification(summary)
+    await resend.emails.send({
+      from: 'dispatch@myateamtransport.com',
+      to: 'dispatch@myateamtransport.com',
+      subject: `NEW TRIP REQUEST — ${booking.facility_name} · ${booking.pickup_date}`,
+      text: summary,
+    })
 
     return NextResponse.json({ success: true, message: 'Trip request received' }, { status: 201 })
   } catch (err) {
