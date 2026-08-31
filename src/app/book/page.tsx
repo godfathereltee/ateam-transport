@@ -33,6 +33,18 @@ export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [timeHr, setTimeHr] = useState('')
+  const [timeMin, setTimeMin] = useState('')
+  const [timeAmpm, setTimeAmpm] = useState('')
+
+  function updateTime(hr: string, min: string, ampm: string) {
+    if (hr && min && ampm) {
+      const h24 = ampm === 'PM' && hr !== '12' ? String(+hr + 12) : ampm === 'AM' && hr === '12' ? '0' : hr
+      set('pickup_time', `${h24.padStart(2,'0')}:${min}`)
+    } else {
+      set('pickup_time', '')
+    }
+  }
 
   function set(field: keyof typeof initialState, value: string | boolean) {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -72,7 +84,7 @@ export default function BookingPage() {
             Call (317) 982-7417
           </a>
           <div style={{ marginTop: '1.5rem' }}>
-            <button onClick={() => { setSubmitted(false); setForm(initialState) }} style={{ color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '.9rem', textDecoration: 'underline' }}>
+            <button onClick={() => { setSubmitted(false); setForm(initialState); setTimeHr(''); setTimeMin(''); setTimeAmpm('') }} style={{ color: 'var(--accent)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '.9rem', textDecoration: 'underline' }}>
               Submit another request
             </button>
           </div>
@@ -155,46 +167,15 @@ export default function BookingPage() {
                 </Field>
                 <Field label="Appt / Drop-off Time" required>
                   <div style={{ display: 'flex', gap: '.4rem' }}>
-                    <select
-                      required
-                      value={form.pickup_time ? form.pickup_time.split(':')[0].replace(/^0/, '') || '12' : ''}
-                      onChange={e => {
-                        const [, min, ampm] = (form.pickup_time || '::AM').split(/[: ]/)
-                        const h = e.target.value
-                        const h24 = ampm === 'PM' && h !== '12' ? String(+h + 12).padStart(2,'0') : ampm === 'AM' && h === '12' ? '00' : h.padStart(2,'0')
-                        set('pickup_time', `${h24}:${min || '00'} ${ampm || 'AM'}`)
-                      }}
-                      style={{ flex: 1 }}
-                    >
+                    <select value={timeHr} onChange={e => { setTimeHr(e.target.value); updateTime(e.target.value, timeMin, timeAmpm) }} style={{ flex: 1 }}>
                       <option value="">Hr</option>
-                      {Array.from({length:12},(_,i)=>i+1).map(h=><option key={h} value={h}>{h}</option>)}
+                      {[1,2,3,4,5,6,7,8,9,10,11,12].map(h => <option key={h} value={String(h)}>{h}</option>)}
                     </select>
-                    <select
-                      required
-                      value={form.pickup_time ? form.pickup_time.split(':')[1]?.split(' ')[0] || '' : ''}
-                      onChange={e => {
-                        const [h24, rest] = (form.pickup_time || '00:00 AM').split(':')
-                        const ampm = rest?.split(' ')[1] || 'AM'
-                        set('pickup_time', `${h24}:${e.target.value} ${ampm}`)
-                      }}
-                      style={{ flex: 1 }}
-                    >
+                    <select value={timeMin} onChange={e => { setTimeMin(e.target.value); updateTime(timeHr, e.target.value, timeAmpm) }} style={{ flex: 1 }}>
                       <option value="">Min</option>
-                      {['00','15','30','45'].map(m=><option key={m} value={m}>{m}</option>)}
+                      {['00','15','30','45'].map(m => <option key={m} value={m}>{m}</option>)}
                     </select>
-                    <select
-                      required
-                      value={form.pickup_time ? (form.pickup_time.includes(' ') ? form.pickup_time.split(' ')[1] : '') : ''}
-                      onChange={e => {
-                        const [h24, minPart] = (form.pickup_time || '00:00').split(':')
-                        const min = minPart?.split(' ')[0] || '00'
-                        const ampm = e.target.value
-                        const h12 = +h24 % 12 || 12
-                        const h24new = ampm === 'PM' && h12 !== 12 ? String(h12 + 12).padStart(2,'0') : ampm === 'AM' && h12 === 12 ? '00' : String(h12).padStart(2,'0')
-                        set('pickup_time', `${h24new}:${min} ${ampm}`)
-                      }}
-                      style={{ flex: 1 }}
-                    >
+                    <select value={timeAmpm} onChange={e => { setTimeAmpm(e.target.value); updateTime(timeHr, timeMin, e.target.value) }} style={{ flex: 1 }}>
                       <option value="">AM/PM</option>
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
