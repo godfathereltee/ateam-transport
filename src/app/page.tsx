@@ -22,6 +22,9 @@ export default function Home() {
             <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text)', letterSpacing: '-.01em' }}>A-TEAM Transport Services</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <Link href="/services" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>Services</Link>
+            <Link href="/faq" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>FAQ</Link>
+            <Link href="/join" style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-2)', textDecoration: 'none', letterSpacing: '.06em', textTransform: 'uppercase' }}>Join</Link>
             <a href="tel:3179827417" style={{ fontFamily: 'var(--font-mono)', fontSize: '.78rem', color: 'var(--text-2)', textDecoration: 'none' }}>(317) 982-7417</a>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.5rem 1.1rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.85rem', whiteSpace: 'nowrap' }}>
               Request a Trip
