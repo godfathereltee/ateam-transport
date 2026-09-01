@@ -119,11 +119,11 @@ export default function Home() {
           <p style={{ ...S.body, maxWidth: '58ch', marginBottom: '2.5rem' }}>
             Over 10 years of service, our reviews have consistently pointed to one thing — A-TEAM drivers and staff genuinely care about every passenger they serve. So much so, we made it the foundation of everything we do. Every team member is held to the A-TEAM CARES standard, every trip, every time.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', marginBottom: '1px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', marginBottom: '1px' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', paddingBottom: '.5rem' }}>A-TEAM</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', paddingBottom: '.5rem' }}>CARES</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
             {[
               { letter: 'A', word: 'Accountability',       side: 'A-TEAM' },
               { letter: 'C', word: 'Communication',        side: 'CARES' },
@@ -136,9 +136,9 @@ export default function Home() {
               { letter: 'M', word: 'Mastery',              side: 'A-TEAM' },
               { letter: 'S', word: 'Selfless Service',     side: 'CARES' },
             ].map((v, i) => (
-              <div key={i} style={{ background: 'var(--bg-panel)', padding: '1.1rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)', minWidth: '2rem', textAlign: 'center' }}>{v.letter}</div>
-                <div style={{ color: 'var(--text)', fontSize: '1rem', fontWeight: 500 }}>{v.word}</div>
+              <div key={i} style={{ background: 'var(--bg-panel)', padding: '1rem 1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent)', minWidth: '1.75rem', textAlign: 'center', flexShrink: 0 }}>{v.letter}</div>
+                <div style={{ color: 'var(--text)', fontSize: '.95rem', fontWeight: 500, lineHeight: 1.3 }}>{v.word}</div>
               </div>
             ))}
           </div>
