@@ -37,15 +37,50 @@ export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [showPickupWarning, setShowPickupWarning] = useState(false)
+  const [pickupWarningConfirmed, setPickupWarningConfirmed] = useState(false)
+  const [timeError, setTimeError] = useState('')
 
   function set(field: keyof typeof initialState, value: string | boolean | null) {
-    setForm(prev => ({ ...prev, [field]: value }))
+    setForm(prev => {
+      const next = { ...prev, [field]: value }
+      // Clear time error whenever either time field changes
+      if (field === 'appt_time' || field === 'pickup_time') setTimeError('')
+      return next
+    })
     setError('')
+  }
+
+  function validateTimes(appt: string, pickup: string): string {
+    if (appt && pickup) {
+      if (pickup >= appt) return 'The Requested Pickup Time must be before the Appointment Time.'
+    }
+    return ''
+  }
+
+  function handleApptTimeChange(v: string) {
+    set('appt_time', v)
+    if (v && form.pickup_time) {
+      const err = validateTimes(v, form.pickup_time)
+      setTimeError(err)
+    }
+  }
+
+  function handlePickupTimeChange(v: string) {
+    set('pickup_time', v)
+    if (v && form.appt_time) {
+      const err = validateTimes(form.appt_time, v)
+      setTimeError(err)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.appt_time && !form.pickup_time) { setError('Please enter an Appointment Time or a Requested Pickup Time.'); return }
+    if (form.appt_time && form.pickup_time) {
+      const tErr = validateTimes(form.appt_time, form.pickup_time)
+      if (tErr) { setTimeError(tErr); setError(tErr); return }
+    }
     if (form.pickup_stairs === null) { setError('Please indicate whether there are stairs at the pickup location.'); return }
     if (form.dropoff_stairs === null) { setError('Please indicate whether there are stairs at the drop-off location.'); return }
     setSubmitting(true)
@@ -197,13 +232,26 @@ export default function BookingPage() {
                 <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
               </Field>
               <Field label="Appointment Time" required>
-                <TimePicker value={form.appt_time ?? ''} onChange={v => set('appt_time', v)} />
+                <TimePicker value={form.appt_time ?? ''} onChange={handleApptTimeChange} />
+                {timeError && form.appt_time && !form.pickup_time === false && (
+                  <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
+                )}
               </Field>
               <Field label="Requested Pickup Time">
-                <TimePicker value={form.pickup_time} onChange={v => set('pickup_time', v)} />
-                <div style={{ fontSize: '.75rem', color: 'var(--text-3)', marginTop: '.35rem', lineHeight: 1.5 }}>
-                  Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
-                </div>
+                <TimePicker
+                  value={form.pickup_time}
+                  onChange={handlePickupTimeChange}
+                  onFirstInteract={() => {
+                    if (!pickupWarningConfirmed) setShowPickupWarning(true)
+                  }}
+                />
+                {timeError ? (
+                  <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
+                ) : (
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-3)', marginTop: '.35rem', lineHeight: 1.5 }}>
+                    Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
+                  </div>
+                )}
               </Field>
               {form.trip_type === 'round_trip' && (
                 <Field label="Estimated Duration of Appointment (if known)">
@@ -282,6 +330,60 @@ export default function BookingPage() {
           </p>
         </form>
       </div>
+
+      {showPickupWarning && (
+        <div style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)', zIndex: 999,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem',
+        }}>
+          <div style={{
+            background: 'var(--bg-panel)', border: '1px solid var(--border)', borderRadius: '8px',
+            maxWidth: '440px', width: '100%', padding: '2rem', boxShadow: '0 8px 32px rgba(0,0,0,.4)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '1rem' }}>
+              <div style={{
+                width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
+                background: 'rgba(232,152,24,.15)', border: '1px solid var(--accent)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '1.1rem',
+              }}>⚠</div>
+              <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+                Requested Pickup Time
+              </h3>
+            </div>
+            <p style={{ fontSize: '.9rem', color: 'var(--text-2)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+              This field should only be used when an appointment time is <strong>not available</strong>, or when the customer specifically needs to request a pickup time.
+            </p>
+            <p style={{ fontSize: '.85rem', color: 'var(--text-2)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              If both are entered, the pickup time <strong>must be before</strong> the appointment time.
+            </p>
+            <div style={{ display: 'flex', gap: '.75rem' }}>
+              <button
+                type="button"
+                onClick={() => { setShowPickupWarning(false); set('pickup_time', ''); }}
+                style={{
+                  flex: 1, padding: '.7rem', border: '1px solid var(--border)', borderRadius: '4px',
+                  background: 'var(--bg)', color: 'var(--text)', fontFamily: 'var(--font-sans)',
+                  fontSize: '.88rem', cursor: 'pointer',
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => { setShowPickupWarning(false); setPickupWarningConfirmed(true); }}
+                style={{
+                  flex: 1, padding: '.7rem', border: 'none', borderRadius: '4px',
+                  background: 'var(--accent)', color: 'var(--accent-fg)', fontFamily: 'var(--font-sans)',
+                  fontSize: '.88rem', fontWeight: 600, cursor: 'pointer',
+                }}
+              >
+                I Understand
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
@@ -308,10 +410,18 @@ function Field({ label, children, required }: { label: string; children: React.R
   )
 }
 
-function TimePicker({ onChange }: { value: string; onChange: (v: string) => void }) {
+function TimePicker({ onChange, onFirstInteract }: { value: string; onChange: (v: string) => void; onFirstInteract?: () => void }) {
   const [hr, setHr] = useState('')
   const [min, setMin] = useState('')
   const [ampm, setAmpm] = useState('')
+  const interacted = useState(false)
+
+  function handleInteract() {
+    if (!interacted[0] && onFirstInteract) {
+      interacted[1](true)
+      onFirstInteract()
+    }
+  }
 
   function emit(h: string, m: string, ap: string) {
     if (h && m && ap) {
@@ -329,15 +439,15 @@ function TimePicker({ onChange }: { value: string; onChange: (v: string) => void
 
   return (
     <div style={{ display: 'flex', gap: '.4rem' }}>
-      <select style={sel} value={hr} onChange={e => { setHr(e.target.value); emit(e.target.value, min, ampm) }}>
+      <select style={sel} value={hr} onFocus={handleInteract} onChange={e => { setHr(e.target.value); emit(e.target.value, min, ampm) }}>
         <option value="">Hour</option>
         {[1,2,3,4,5,6,7,8,9,10,11,12].map(h => <option key={h} value={String(h)}>{h}</option>)}
       </select>
-      <select style={sel} value={min} onChange={e => { setMin(e.target.value); emit(hr, e.target.value, ampm) }}>
+      <select style={sel} value={min} onFocus={handleInteract} onChange={e => { setMin(e.target.value); emit(hr, e.target.value, ampm) }}>
         <option value="">Min</option>
         {['00','15','30','45'].map(m => <option key={m} value={m}>{m}</option>)}
       </select>
-      <select style={sel} value={ampm} onChange={e => { setAmpm(e.target.value); emit(hr, min, e.target.value) }}>
+      <select style={sel} value={ampm} onFocus={handleInteract} onChange={e => { setAmpm(e.target.value); emit(hr, min, e.target.value) }}>
         <option value="">AM/PM</option>
         <option value="AM">AM</option>
         <option value="PM">PM</option>
