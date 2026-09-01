@@ -238,6 +238,9 @@ export default function BookingPage() {
                 )}
               </Field>
               <Field label="Requested Pickup Time">
+                <div style={{ fontSize: '1rem', color: 'var(--accent)', fontWeight: 700, marginBottom: '.5rem', lineHeight: 1.5 }}>
+                  Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
+                </div>
                 <TimePicker
                   value={form.pickup_time}
                   onChange={handlePickupTimeChange}
@@ -245,12 +248,8 @@ export default function BookingPage() {
                     if (!pickupWarningConfirmed) setShowPickupWarning(true)
                   }}
                 />
-                {timeError ? (
+                {timeError && (
                   <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
-                ) : (
-                  <div style={{ fontSize: '1rem', color: 'var(--accent)', fontWeight: 700, marginTop: '.35rem', lineHeight: 1.5 }}>
-                    Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
-                  </div>
                 )}
               </Field>
               {form.trip_type === 'round_trip' && (
