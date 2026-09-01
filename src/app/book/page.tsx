@@ -241,7 +241,7 @@ export default function BookingPage() {
                 <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 500, color: 'var(--text-2)', marginBottom: '.35rem' }}>
                   Requested Pickup Time{' '}
                   <span style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '1rem' }}>
-                    — Only use if an appointment time is not available or a specific pickup time is needed.
+                    — Only use &ldquo;Requested Pickup Time&rdquo; if appointment time is not available.
                   </span>
                 </label>
                 <TimePicker
