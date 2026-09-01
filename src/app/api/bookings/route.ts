@@ -48,8 +48,6 @@ Trip Type:              ${tripLabel}
 Date of Transport:      ${booking.pickup_date}
 Appointment Time:       ${booking.appt_time || 'N/A'}
 Requested Pickup Time:  ${booking.pickup_time || 'N/A'}
-Oxygen Required:        ${booking.oxygen_required ? 'Yes' : 'No'}
-
 PICKUP
 Pickup Address:         ${booking.pickup_address}
 Stairs at Pickup:       ${booking.pickup_stairs ? 'Yes' : 'No'}
