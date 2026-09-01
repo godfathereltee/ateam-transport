@@ -98,6 +98,30 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
       text: summary,
     })
 
+    // Customer confirmation email
+    await resend.emails.send({
+      from: 'dispatch@myateamtransport.com',
+      to: booking.confirmation_email!,
+      subject: 'Trip Request Received – ATEAM Transport Services',
+      text: `Thank you for inquiring about our transportation services.
+
+If this is a request to schedule transportation with us, our dispatch team will begin processing your request as soon as possible during our regular business hours, Monday–Friday, 9:00 AM–5:00 PM ET, excluding major holidays. All other inquiries will be responded to in a timely manner.
+
+If your message was sent outside of our regular business hours, we will review and reply to your email during our normal operating hours.
+
+Should you have further questions or need clarification, feel free to reach out to our team at dispatch@myateamtransport.com or visit our website at www.myateamtransport.com.
+
+────────────────────────────────────────
+Cancellation / No-Show Policy
+If cancellations occur within 24 hours of the scheduled appointment or drop-off time, a cancellation fee will apply.
+────────────────────────────────────────
+
+A-TEAM Transport Services
+Indianapolis, IN · Veteran-Owned
+(317) 982-7417 · dispatch@myateamtransport.com
+www.myateamtransport.com`,
+    })
+
     return NextResponse.json({ success: true, message: 'Trip request received' }, { status: 201 })
   } catch (err) {
     console.error('[BOOKING ERROR]', err)
