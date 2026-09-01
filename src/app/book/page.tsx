@@ -200,7 +200,6 @@ export default function BookingPage() {
               <Field label="Requested Pickup Time (if appt time not applicable)">
                 <TimePicker value={form.pickup_time} onChange={v => set('pickup_time', v)} />
               </Field>
-              <CheckRow label="Oxygen required" checked={form.oxygen_required} onChange={v => set('oxygen_required', v)} />
             </div>
           </section>
 
