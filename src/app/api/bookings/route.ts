@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
   try {
     const booking: BookingRequest = await req.json()
 
-    const required = ['facility_contact_name', 'facility_contact_phone', 'patient_name',
-      'transport_type', 'trip_type', 'pickup_date',
+    const required = ['facility_contact_name', 'facility_contact_phone', 'confirmation_email',
+      'patient_name', 'transport_type', 'trip_type', 'pickup_date',
       'pickup_address', 'destination_address']
     for (const field of required) {
       if (!booking[field as keyof BookingRequest]) {
@@ -93,6 +93,7 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
     await resend.emails.send({
       from: 'dispatch@myateamtransport.com',
       to: 'dispatch@myateamtransport.com',
+      replyTo: booking.confirmation_email,
       subject: `NEW TRIP REQUEST — ${booking.facility_name || booking.facility_contact_name} · ${booking.pickup_date}`,
       text: summary,
     })

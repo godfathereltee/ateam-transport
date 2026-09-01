@@ -124,8 +124,8 @@ export default function BookingPage() {
               <Field label="Requesting Facility Name (if applicable)">
                 <input value={form.facility_name} onChange={e => set('facility_name', e.target.value)} placeholder="Bloomington Regional Rehabilitation Hospital" />
               </Field>
-              <Field label="Trip Confirmation Email (optional)">
-                <input type="email" value={form.confirmation_email} onChange={e => set('confirmation_email', e.target.value)} placeholder="dispatch@facility.com" />
+              <Field label="Trip Confirmation Email" required>
+                <input required type="email" value={form.confirmation_email} onChange={e => set('confirmation_email', e.target.value)} placeholder="dispatch@facility.com" />
               </Field>
             </div>
           </section>
