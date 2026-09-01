@@ -248,7 +248,7 @@ export default function BookingPage() {
                 {timeError ? (
                   <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
                 ) : (
-                  <div style={{ fontSize: '.75rem', color: 'var(--accent)', fontWeight: 700, marginTop: '.35rem', lineHeight: 1.5 }}>
+                  <div style={{ fontSize: '1rem', color: 'var(--accent)', fontWeight: 700, marginTop: '.35rem', lineHeight: 1.5 }}>
                     Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
                   </div>
                 )}
