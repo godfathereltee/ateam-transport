@@ -117,7 +117,10 @@ export default function Home() {
           <div style={S.accentLabel}>Our Values</div>
           <h2 style={S.h2}><span style={{ whiteSpace: 'nowrap' }}>A-TEAM</span> CARES.</h2>
           <p style={{ ...S.body, maxWidth: '58ch', marginBottom: '2.5rem' }}>
-            Over 10 years of service, our reviews have consistently pointed to one thing — A-TEAM drivers and staff genuinely care about every passenger they serve. So much so, we made it the foundation of everything we do. Every team member is held to the A-TEAM CARES standard, every trip, every time.
+            Over 10 years of service, our reviews have consistently pointed to one thing —{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>A-TEAM</span> drivers and staff genuinely care about every passenger they serve. So much so,
+            we made it the foundation of everything we do. Every team member is held to the{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>A-TEAM CARES</span> standard, every trip, every time.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', marginBottom: '1px' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--accent)', paddingBottom: '.5rem' }}>A-TEAM</div>
