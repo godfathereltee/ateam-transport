@@ -24,6 +24,7 @@ export interface BookingRequest {
   pickup_date: string
   appt_time?: string
   pickup_time: string
+  appt_duration?: string
   // Pickup
   pickup_address: string
   pickup_stairs: boolean

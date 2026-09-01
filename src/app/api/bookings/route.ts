@@ -5,6 +5,15 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function fmt12h(t?: string | null): string {
+  if (!t) return 'N/A'
+  const [hStr, mStr] = t.split(':')
+  const h = parseInt(hStr)
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  const h12 = h % 12 || 12
+  return `${h12}:${mStr} ${ampm}`
+}
+
 const TRANSPORT_LABELS: Record<string, string> = {
   standard_wheelchair: 'Standard Wheelchair (up to 250 lbs)',
   bariatric_wheelchair: 'Bariatric Wheelchair (250+ lbs)',
@@ -46,8 +55,9 @@ TRIP DETAILS
 Type of Transport:      ${transportLabel}
 Trip Type:              ${tripLabel}
 Date of Transport:      ${booking.pickup_date}
-Appointment Time:       ${booking.appt_time || 'N/A'}
-Requested Pickup Time:  ${booking.pickup_time || 'N/A'}
+Appointment Time:       ${fmt12h(booking.appt_time)}
+Requested Pickup Time:  ${fmt12h(booking.pickup_time)}
+${booking.trip_type === 'round_trip' ? `Est. Appt Duration:     ${booking.appt_duration || 'Not provided'}` : ''}
 PICKUP
 Pickup Address:         ${booking.pickup_address}
 Stairs at Pickup:       ${booking.pickup_stairs ? 'Yes' : 'No'}
@@ -73,6 +83,7 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
       pickup_date: booking.pickup_date,
       appt_time: booking.appt_time || null,
       pickup_time: booking.pickup_time || null,
+      appt_duration: booking.appt_duration || null,
       pickup_address: booking.pickup_address,
       pickup_stairs: booking.pickup_stairs,
       pickup_notes: booking.pickup_notes || null,

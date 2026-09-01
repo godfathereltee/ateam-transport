@@ -11,25 +11,25 @@ const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
   { value: 'ambulatory', label: 'Ambulatory (Walking)' },
 ]
 
-const initialState: Omit<BookingRequest, 'status'> = {
+const initialState = {
   facility_contact_name: '',
   facility_contact_phone: '',
   facility_name: '',
   confirmation_email: '',
   patient_name: '',
   patient_weight: '',
-  transport_type: 'standard_wheelchair',
-  trip_type: 'one_way',
+  transport_type: 'standard_wheelchair' as TransportType,
+  trip_type: 'one_way' as TripType,
   pickup_date: '',
   appt_time: '',
   pickup_time: '',
+  appt_duration: '',
   pickup_address: '',
-  pickup_stairs: false,
+  pickup_stairs: null as boolean | null,
   pickup_notes: '',
   destination_address: '',
-  dropoff_stairs: false,
+  dropoff_stairs: null as boolean | null,
   dropoff_notes: '',
-  oxygen_required: false,
 }
 
 export default function BookingPage() {
@@ -38,7 +38,7 @@ export default function BookingPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
-  function set(field: keyof typeof initialState, value: string | boolean) {
+  function set(field: keyof typeof initialState, value: string | boolean | null) {
     setForm(prev => ({ ...prev, [field]: value }))
     setError('')
   }
@@ -46,6 +46,8 @@ export default function BookingPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.appt_time && !form.pickup_time) { setError('Please enter an Appointment Time or a Requested Pickup Time.'); return }
+    if (form.pickup_stairs === null) { setError('Please indicate whether there are stairs at the pickup location.'); return }
+    if (form.dropoff_stairs === null) { setError('Please indicate whether there are stairs at the drop-off location.'); return }
     setSubmitting(true)
     setError('')
     try {
@@ -194,12 +196,30 @@ export default function BookingPage() {
               <Field label="Date of Transport" required>
                 <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
               </Field>
-              <Field label="Appointment Time">
+              <Field label="Appointment Time" required>
                 <TimePicker value={form.appt_time ?? ''} onChange={v => set('appt_time', v)} />
               </Field>
-              <Field label="Requested Pickup Time (if appt time not applicable)">
+              <Field label="Requested Pickup Time">
                 <TimePicker value={form.pickup_time} onChange={v => set('pickup_time', v)} />
+                <div style={{ fontSize: '.75rem', color: 'var(--text-3)', marginTop: '.35rem', lineHeight: 1.5 }}>
+                  Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
+                </div>
               </Field>
+              {form.trip_type === 'round_trip' && (
+                <Field label="Estimated Duration of Appointment (if known)">
+                  <select value={form.appt_duration} onChange={e => set('appt_duration', e.target.value)}>
+                    <option value="">Select duration</option>
+                    <option value="30 minutes">30 minutes</option>
+                    <option value="1 hour">1 hour</option>
+                    <option value="1.5 hours">1.5 hours</option>
+                    <option value="2 hours">2 hours</option>
+                    <option value="2.5 hours">2.5 hours</option>
+                    <option value="3 hours">3 hours</option>
+                    <option value="3+ hours">3+ hours</option>
+                  </select>
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-3)', marginTop: '.35rem' }}>Helps dispatch estimate when the passenger may be ready for the return trip.</div>
+                </Field>
+              )}
             </div>
           </section>
 
@@ -210,7 +230,7 @@ export default function BookingPage() {
               <Field label="Pickup Address" required>
                 <input required value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="BRRH, 3050 N. Lintel Drive, Bloomington, IN 47404" />
               </Field>
-              <CheckRow label="Are there stairs at the pickup location?" checked={form.pickup_stairs} onChange={v => set('pickup_stairs', v)} />
+              <YesNo label="Are there stairs at the pickup location?" required value={form.pickup_stairs} onChange={v => set('pickup_stairs', v)} />
               <Field label="Pickup Notes (room number, entrance, etc.)">
                 <textarea value={form.pickup_notes} onChange={e => set('pickup_notes', e.target.value)} rows={2} placeholder="Pt is in room 205. Pick up at the front entrance." />
               </Field>
@@ -224,7 +244,7 @@ export default function BookingPage() {
               <Field label="Drop-Off Address" required>
                 <input required value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="Glenburn Senior Living, 618 Glenburn Rd, Linton, IN 47441" />
               </Field>
-              <CheckRow label="Are there stairs at the drop-off location?" checked={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
+              <YesNo label="Are there stairs at the drop-off location?" required value={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
               <Field label="Drop-Off Notes">
                 <textarea value={form.dropoff_notes} onChange={e => set('dropoff_notes', e.target.value)} rows={2} placeholder="Pt may be dropped off at the front entrance." />
               </Field>
@@ -322,6 +342,27 @@ function TimePicker({ onChange }: { value: string; onChange: (v: string) => void
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
+    </div>
+  )
+}
+
+function YesNo({ label, value, onChange, required }: { label: string; value: boolean | null; onChange: (v: boolean) => void; required?: boolean }) {
+  const btn = (active: boolean, text: string): React.CSSProperties => ({
+    flex: 1, padding: '.55rem', borderRadius: '4px', border: value === active ? '2px solid var(--accent)' : '1px solid var(--border)',
+    background: value === active ? 'var(--accent)' : 'var(--bg-panel)',
+    color: value === active ? 'var(--accent-fg)' : 'var(--text-2)',
+    fontFamily: 'var(--font-sans)', fontSize: '.88rem',
+    fontWeight: value === active ? 700 : 400, cursor: 'pointer',
+  })
+  return (
+    <div>
+      <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 500, color: 'var(--text-2)', marginBottom: '.35rem' }}>
+        {label}{required && <span style={{ color: 'var(--crit)', marginLeft: '.2rem' }}>*</span>}
+      </label>
+      <div style={{ display: 'flex', gap: '.5rem' }}>
+        <button type="button" style={btn(true, 'Yes')} onClick={() => onChange(true)}>Yes</button>
+        <button type="button" style={btn(false, 'No')} onClick={() => onChange(false)}>No</button>
+      </div>
     </div>
   )
 }
