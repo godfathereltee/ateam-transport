@@ -237,10 +237,13 @@ export default function BookingPage() {
                   <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
                 )}
               </Field>
-              <Field label="Requested Pickup Time">
-                <div style={{ fontSize: '1rem', color: 'var(--accent)', fontWeight: 700, marginBottom: '.5rem', lineHeight: 1.5 }}>
-                  Only complete this field if an appointment time is not available, or if you need to request a specific pickup time.
-                </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '.8rem', fontWeight: 500, color: 'var(--text-2)', marginBottom: '.35rem' }}>
+                  Requested Pickup Time{' '}
+                  <span style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '1rem' }}>
+                    — Only use if an appointment time is not available or a specific pickup time is needed.
+                  </span>
+                </label>
                 <TimePicker
                   value={form.pickup_time}
                   onChange={handlePickupTimeChange}
@@ -251,7 +254,7 @@ export default function BookingPage() {
                 {timeError && (
                   <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
                 )}
-              </Field>
+              </div>
               {form.trip_type === 'round_trip' && (
                 <Field label="Estimated Duration of Appointment (if known)">
                   <select value={form.appt_duration} onChange={e => set('appt_duration', e.target.value)}>
