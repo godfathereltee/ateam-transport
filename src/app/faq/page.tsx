@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: 'Does A-TEAM provide long-distance transportation?',
-    a: 'Yes. A-TEAM Transport provides long-distance transportation for medical and non-medical purposes. Whether you need to travel to a specialist in another city or require transport across the state, we can accommodate your needs. Long-distance trips are available based on scheduling and vehicle availability. We encourage you to contact us in advance to discuss the details of your trip and receive a quote.',
+    a: 'Yes. A-TEAM Transport provides long-distance medical transportation. Whether you need to travel to a specialist in another city or require transport to a medical facility across the state, we can accommodate your needs. Long-distance trips are available based on scheduling and vehicle availability. We encourage you to contact us in advance to discuss the details of your trip and receive a quote.',
   },
 ]
 

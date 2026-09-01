@@ -77,17 +77,16 @@ export default function ServicesPage() {
             We go where you need to go.
           </h2>
           <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1.05rem', maxWidth: '58ch', marginBottom: '2rem' }}>
-            Medical appointments, dialysis, rehabilitation, hospital discharges — and everyday life. Saturdays, Sundays, holidays, birthdays included.
+            Medical appointments, dialysis, rehabilitation, hospital discharges — weekends and holidays included.
+          </p>
+          <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1.05rem', maxWidth: '58ch', marginBottom: '1.5rem' }}>
+            Our transportation services are offered to passengers for:
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '.5rem' }}>
             {[
-              'Medical appointments', 'Dental appointments', 'Dialysis & specialty treatments',
-              'Rehabilitation & Physical Therapy', 'Routine & follow-up care', 'Nursing facility discharges',
-              'Hospital discharges', 'Airport pick-up & drop-off', 'Ride to work',
-              'Ride to school', 'Family outings', 'Home visits with family',
-              'Everyday errands', 'Religious services', 'Funerals',
-              'Grocery trips', 'Hair appointments', 'Family dinners',
-              'Holiday gatherings', 'Birthday trips',
+              'Medical appointments', 'Dental appointments', 'Dialysis and other specialty treatments',
+              'Rehabilitation and Physical Therapy', 'Routine and follow-up care',
+              'Nursing facility discharges', 'Hospital discharges',
             ].map(item => (
               <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '.6rem', padding: '.6rem .75rem', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-panel)', fontSize: '.95rem', color: 'var(--text-2)' }}>
                 <span style={{ color: 'var(--accent)', fontWeight: 700, flexShrink: 0 }}>—</span>
