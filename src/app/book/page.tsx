@@ -233,7 +233,7 @@ export default function BookingPage() {
               </Field>
               <Field label="Appointment Time" required>
                 <TimePicker value={form.appt_time ?? ''} onChange={handleApptTimeChange} />
-                {timeError && form.appt_time && !form.pickup_time === false && (
+                {timeError && (
                   <div style={{ fontSize: '.8rem', color: 'var(--crit)', marginTop: '.35rem' }}>{timeError}</div>
                 )}
               </Field>
