@@ -5,8 +5,8 @@ import Nav from '@/components/Nav'
 import type { BookingRequest, TransportType, TripType } from '@/types'
 
 const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
-  { value: 'standard_wheelchair', label: 'Standard Wheelchair (up to 250 lbs)' },
-  { value: 'bariatric_wheelchair', label: 'Bariatric Wheelchair (250+ lbs)' },
+  { value: 'standard_wheelchair', label: 'Standard Wheelchair (up to 299 lbs)' },
+  { value: 'bariatric_wheelchair', label: 'Bariatric Wheelchair (300+ lbs)' },
   { value: 'stretcher', label: 'Stretcher' },
   { value: 'ambulatory', label: 'Ambulatory (Walking)' },
 ]
@@ -18,16 +18,25 @@ const initialState = {
   confirmation_email: '',
   patient_name: '',
   patient_weight: '',
+  doctor_name: '',
   transport_type: 'standard_wheelchair' as TransportType,
   trip_type: 'one_way' as TripType,
   pickup_date: '',
   appt_time: '',
   pickup_time: '',
   appt_duration: '',
-  pickup_address: '',
+  pickup_street: '',
+  pickup_room: '',
+  pickup_city: '',
+  pickup_state: '',
+  pickup_zip: '',
   pickup_stairs: null as boolean | null,
   pickup_notes: '',
-  destination_address: '',
+  destination_street: '',
+  destination_suite: '',
+  destination_city: '',
+  destination_state: '',
+  destination_zip: '',
   dropoff_stairs: null as boolean | null,
   dropoff_notes: '',
 }
@@ -41,7 +50,7 @@ export default function BookingPage() {
   const [pickupWarningConfirmed, setPickupWarningConfirmed] = useState(false)
   const [timeError, setTimeError] = useState('')
 
-  function set(field: keyof typeof initialState, value: string | boolean | null) {
+  function set(field: keyof typeof initialState, value: string | boolean | null) { // eslint-disable-line @typescript-eslint/no-explicit-any
     setForm(prev => {
       const next = { ...prev, [field]: value }
       // Clear time error whenever either time field changes
@@ -77,6 +86,8 @@ export default function BookingPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!form.pickup_date) { setError('Please select a Date of Transport.'); return }
+    if (!form.pickup_street || !form.pickup_city || !form.pickup_state || !form.pickup_zip) { setError('Please complete all Pickup Address fields.'); return }
+    if (!form.destination_street || !form.destination_city || !form.destination_state || !form.destination_zip) { setError('Please complete all Drop-Off Address fields.'); return }
     if (!form.appt_time && !form.pickup_time) { setError('Please enter an Appointment Time or a Requested Pickup Time.'); return }
     if (form.appt_time && form.pickup_time) {
       const tErr = validateTimes(form.appt_time, form.pickup_time)
@@ -90,7 +101,12 @@ export default function BookingPage() {
       const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, status: 'pending' }),
+        body: JSON.stringify({
+          ...form,
+          pickup_address: [form.pickup_street, form.pickup_room ? `Room ${form.pickup_room}` : '', form.pickup_city, `${form.pickup_state} ${form.pickup_zip}`].filter(Boolean).join(', '),
+          destination_address: [form.destination_street, form.destination_suite ? `Suite ${form.destination_suite}` : '', form.destination_city, `${form.destination_state} ${form.destination_zip}`].filter(Boolean).join(', '),
+          status: 'pending',
+        }),
       })
       if (!res.ok) throw new Error('Submission failed')
       setSubmitted(true)
@@ -177,6 +193,9 @@ export default function BookingPage() {
               </Field>
               <Field label="Patient Weight (lbs)">
                 <input type="number" value={form.patient_weight} onChange={e => set('patient_weight', e.target.value)} placeholder="150" style={{ maxWidth: '160px' }} />
+              </Field>
+              <Field label="Name of Doctor (if known)">
+                <input value={form.doctor_name} onChange={e => set('doctor_name', e.target.value)} placeholder="Dr. Smith" />
               </Field>
             </div>
           </section>
@@ -278,12 +297,28 @@ export default function BookingPage() {
           <section>
             <SectionLabel>Pickup Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <Field label="Pickup Address" required>
-                <textarea required rows={2} value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="BRRH, 3050 N. Lintel Drive, Bloomington, IN 47404" style={{ resize: 'none' }} />
-              </Field>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '.75rem' }}>
+                <Field label="Pickup Address" required>
+                  <input value={form.pickup_street} onChange={e => set('pickup_street', e.target.value)} placeholder="3050 N. Lintel Drive" />
+                </Field>
+                <Field label="Room Number">
+                  <input value={form.pickup_room} onChange={e => set('pickup_room', e.target.value)} placeholder="205" />
+                </Field>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '.75rem' }}>
+                <Field label="City" required>
+                  <input value={form.pickup_city} onChange={e => set('pickup_city', e.target.value)} placeholder="Bloomington" />
+                </Field>
+                <Field label="State" required>
+                  <input value={form.pickup_state} onChange={e => set('pickup_state', e.target.value)} placeholder="IN" maxLength={2} style={{ textTransform: 'uppercase' }} />
+                </Field>
+                <Field label="Zip" required>
+                  <input value={form.pickup_zip} onChange={e => set('pickup_zip', e.target.value)} placeholder="47404" maxLength={5} />
+                </Field>
+              </div>
               <YesNo label="Are there stairs at the pickup location?" required value={form.pickup_stairs} onChange={v => set('pickup_stairs', v)} />
-              <Field label="Pickup Notes (room number, entrance, etc.)">
-                <textarea value={form.pickup_notes} onChange={e => set('pickup_notes', e.target.value)} rows={2} placeholder="Pt is in room 205. Pick up at the front entrance." />
+              <Field label="Pickup Notes (entrance, special instructions, etc.)">
+                <textarea value={form.pickup_notes} onChange={e => set('pickup_notes', e.target.value)} rows={2} placeholder="Pick up at the front entrance." />
               </Field>
             </div>
           </section>
@@ -292,9 +327,25 @@ export default function BookingPage() {
           <section>
             <SectionLabel>Drop-Off Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <Field label="Drop-Off Address" required>
-                <textarea required rows={2} value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="Glenburn Senior Living, 618 Glenburn Rd, Linton, IN 47441" style={{ resize: 'none' }} />
-              </Field>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '.75rem' }}>
+                <Field label="Drop-Off Address" required>
+                  <input value={form.destination_street} onChange={e => set('destination_street', e.target.value)} placeholder="618 Glenburn Rd" />
+                </Field>
+                <Field label="Suite Number">
+                  <input value={form.destination_suite} onChange={e => set('destination_suite', e.target.value)} placeholder="Suite 100" />
+                </Field>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '.75rem' }}>
+                <Field label="City" required>
+                  <input value={form.destination_city} onChange={e => set('destination_city', e.target.value)} placeholder="Linton" />
+                </Field>
+                <Field label="State" required>
+                  <input value={form.destination_state} onChange={e => set('destination_state', e.target.value)} placeholder="IN" maxLength={2} style={{ textTransform: 'uppercase' }} />
+                </Field>
+                <Field label="Zip" required>
+                  <input value={form.destination_zip} onChange={e => set('destination_zip', e.target.value)} placeholder="47441" maxLength={5} />
+                </Field>
+              </div>
               <YesNo label="Are there stairs at the drop-off location?" required value={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
               <Field label="Drop-Off Notes">
                 <textarea value={form.dropoff_notes} onChange={e => set('dropoff_notes', e.target.value)} rows={2} placeholder="Pt may be dropped off at the front entrance." />

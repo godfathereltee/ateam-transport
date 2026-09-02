@@ -50,6 +50,7 @@ Confirmation Email:     ${booking.confirmation_email || 'N/A'}
 PATIENT INFORMATION
 Patient Name:           ${booking.patient_name}
 Patient Weight:         ${booking.patient_weight || 'Not provided'}
+Doctor:                 ${(booking as any).doctor_name || 'Not provided'}
 
 TRIP DETAILS
 Type of Transport:      ${transportLabel}
@@ -90,7 +91,7 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
       destination_address: booking.destination_address,
       dropoff_stairs: booking.dropoff_stairs,
       dropoff_notes: booking.dropoff_notes || null,
-      oxygen_required: booking.oxygen_required,
+      doctor_name: (booking as any).doctor_name || null,
       status: 'pending',
     })
 
