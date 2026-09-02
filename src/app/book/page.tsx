@@ -154,6 +154,10 @@ export default function BookingPage() {
         input::placeholder,textarea::placeholder{color:var(--text-3)}
         input[type=date]::-webkit-calendar-picker-indicator,input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.6;cursor:pointer;}
         input[type=date],input[type=time]{cursor:pointer;}
+        @media(max-width:520px){
+          .addr-row{grid-template-columns:1fr!important;}
+          .addr-csz{grid-template-columns:1fr 60px 80px!important;}
+        }
       `}</style>
 
       <div style={{ maxWidth: '680px', margin: '0 auto', padding: '2rem 1.5rem 0' }}>
@@ -297,15 +301,15 @@ export default function BookingPage() {
           <section>
             <SectionLabel>Pickup Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '.75rem' }}>
+              <div className="addr-row" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '.75rem' }}>
                 <Field label="Pickup Address" required>
                   <input value={form.pickup_street} onChange={e => set('pickup_street', e.target.value)} placeholder="3050 N. Lintel Drive" />
                 </Field>
-                <Field label="Room Number">
+                <Field label="Room #">
                   <input value={form.pickup_room} onChange={e => set('pickup_room', e.target.value)} placeholder="205" />
                 </Field>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '.75rem' }}>
+              <div className="addr-csz" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '.75rem' }}>
                 <Field label="City" required>
                   <input value={form.pickup_city} onChange={e => set('pickup_city', e.target.value)} placeholder="Bloomington" />
                 </Field>
@@ -327,15 +331,15 @@ export default function BookingPage() {
           <section>
             <SectionLabel>Drop-Off Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '.75rem' }}>
+              <div className="addr-row" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '.75rem' }}>
                 <Field label="Drop-Off Address" required>
                   <input value={form.destination_street} onChange={e => set('destination_street', e.target.value)} placeholder="618 Glenburn Rd" />
                 </Field>
-                <Field label="Suite Number">
-                  <input value={form.destination_suite} onChange={e => set('destination_suite', e.target.value)} placeholder="Suite 100" />
+                <Field label="Suite #">
+                  <input value={form.destination_suite} onChange={e => set('destination_suite', e.target.value)} placeholder="100" />
                 </Field>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '.75rem' }}>
+              <div className="addr-csz" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '.75rem' }}>
                 <Field label="City" required>
                   <input value={form.destination_city} onChange={e => set('destination_city', e.target.value)} placeholder="Linton" />
                 </Field>
