@@ -385,7 +385,7 @@ export default function BookingPage() {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="cf-turnstile" data-sitekey="0x4AAAAAAElEr2KY6wmm_hfY" data-callback="onTurnstileSuccess" data-theme="dark" />
           </div>
-          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async strategy="afterInteractive" />
 
           {error && (
             <div style={{ padding: '.85rem 1rem', background: 'rgba(176,48,32,.09)', border: '1px solid var(--crit)', borderRadius: '4px', color: 'var(--crit)', fontSize: '.88rem' }}>
