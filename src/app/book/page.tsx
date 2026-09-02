@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import Nav from '@/components/Nav'
@@ -45,6 +45,14 @@ const initialState = {
 }
 
 export default function BookingPage() {
+  return (
+    <Suspense fallback={null}>
+      <BookingForm />
+    </Suspense>
+  )
+}
+
+function BookingForm() {
   const searchParams = useSearchParams()
   const [form, setForm] = useState(() => ({
     ...initialState,
