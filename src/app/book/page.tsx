@@ -76,6 +76,7 @@ export default function BookingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!form.pickup_date) { setError('Please select a Date of Transport.'); return }
     if (!form.appt_time && !form.pickup_time) { setError('Please enter an Appointment Time or a Requested Pickup Time.'); return }
     if (form.appt_time && form.pickup_time) {
       const tErr = validateTimes(form.appt_time, form.pickup_time)
@@ -229,7 +230,7 @@ export default function BookingPage() {
                 </div>
               </Field>
               <Field label="Date of Transport" required>
-                <input required type="date" value={form.pickup_date} onChange={e => set('pickup_date', e.target.value)} min={new Date().toISOString().split('T')[0]} />
+                <DatePicker value={form.pickup_date} onChange={v => set('pickup_date', v)} />
               </Field>
               <Field label="Appointment Time" required>
                 <TimePicker value={form.appt_time ?? ''} onChange={handleApptTimeChange} />
@@ -387,6 +388,48 @@ export default function BookingPage() {
         </div>
       )}
     </main>
+  )
+}
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
+function DatePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const today = new Date()
+  const [month, setMonth] = useState(value ? String(parseInt(value.split('-')[1])) : '')
+  const [day, setDay] = useState(value ? String(parseInt(value.split('-')[2])) : '')
+  const [year, setYear] = useState(value ? value.split('-')[0] : '')
+
+  function emit(m: string, d: string, y: string) {
+    if (m && d && y) {
+      onChange(`${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`)
+    }
+  }
+
+  const daysInMonth = month && year ? new Date(parseInt(year), parseInt(month), 0).getDate() : 31
+  const years = Array.from({ length: 3 }, (_, i) => today.getFullYear() + i)
+
+  const sel: React.CSSProperties = {
+    flex: 1, padding: '.65rem .4rem', background: 'var(--bg-panel)',
+    border: '1px solid var(--border)', borderRadius: '4px',
+    color: 'var(--text)', fontFamily: 'var(--font-sans)',
+    fontSize: '.9rem', outline: 'none', cursor: 'pointer',
+  }
+
+  return (
+    <div style={{ display: 'flex', gap: '.4rem' }}>
+      <select style={{ ...sel, flex: 2 }} value={month} onChange={e => { setMonth(e.target.value); emit(e.target.value, day, year) }}>
+        <option value="">Month</option>
+        {MONTHS.map((m, i) => <option key={m} value={String(i + 1)}>{m}</option>)}
+      </select>
+      <select style={sel} value={day} onChange={e => { setDay(e.target.value); emit(month, e.target.value, year) }}>
+        <option value="">Day</option>
+        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(d => <option key={d} value={String(d)}>{d}</option>)}
+      </select>
+      <select style={{ ...sel, flex: 2 }} value={year} onChange={e => { setYear(e.target.value); emit(month, day, e.target.value) }}>
+        <option value="">Year</option>
+        {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
+      </select>
+    </div>
   )
 }
 
