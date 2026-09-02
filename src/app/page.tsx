@@ -27,7 +27,7 @@ export default function Home() {
             When your residents need to get there safely.
           </h1>
           <p style={{ ...S.body, maxWidth: '52ch', marginBottom: '2.5rem' }}>
-            Indianapolis&apos; original NEMT stretcher provider. Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities.
+            Indianapolis&apos; original NEMT stretcher and wheelchair passenger transportation service. Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities.
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '.01em' }}>
@@ -74,7 +74,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)', borderRadius: '4px', overflow: 'hidden', marginTop: '1.75rem' }}>
             {[
               { title: 'Stretcher Transport', desc: 'For passengers unable to sit upright during transport. Cost-effective, non-emergency stretcher loading and secure transport.', href: '/services#stretcher' },
-              { title: 'Wheelchair Transport', desc: 'Proper wheelchair securement and wider entry ramp access for passengers with varying mobility devices and requirements.', href: '/services#wheelchair' },
+              { title: 'Wheelchair Passenger Transport', desc: 'Safe, dignified transport for persons using wheelchairs. Proper securement, wider entry ramps, and vehicles equipped to accommodate a full range of mobility devices.', href: '/services#wheelchair' },
               { title: 'Bariatric Transport', desc: 'Wide rear-entry ramps accommodating bariatric wheelchairs and personally owned chairs that exceed standard 35–36" ramp widths.', href: '/services#bariatric' },
             ].map(s => (
               <a key={s.title} href={s.href} style={{ background: 'var(--bg)', padding: '1.75rem 1.5rem', textDecoration: 'none', display: 'block', transition: 'background .15s' }}
