@@ -1,6 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'NEMT Services — Wheelchair, Stretcher & Ambulatory Transport',
+  description: 'A-TEAM Transport Services offers wheelchair, stretcher, bariatric, and ambulatory non-emergency medical transportation in Indianapolis and Central Indiana. Medical appointments, dialysis, rehab, hospital discharges & more.',
+  alternates: { canonical: 'https://www.myateamtransport.com/services' },
+  openGraph: { url: 'https://www.myateamtransport.com/services' },
+}
 
 const services = [
   {
