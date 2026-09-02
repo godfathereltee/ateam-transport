@@ -27,19 +27,11 @@ export default function Home() {
             When your residents need to get there safely.
           </h1>
           <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '1.25rem' }}>
-            Indianapolis&apos; original NEMT passenger stretcher transportation company. We offer both stretcher and wheelchair passenger transportation for passengers living at home or in a nursing facility — delivered with the dignity and professionalism every person deserves.
+            Indianapolis&apos; original NEMT stretcher transportation company. We offer both stretcher and wheelchair passenger transportation for passengers living at home or in a nursing facility — excellence delivered with the dignity and professionalism every person deserves.
           </p>
-          <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '1.75rem' }}>
-            Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities. Our commitment has never changed: move every passenger safely, on time, and with genuine care — every trip, every time.
+          <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '2.5rem' }}>
+            Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities. Our commitment has never changed&hellip; &ldquo;A-TEAM CARES&rdquo;
           </p>
-          <div style={{ display: 'flex', gap: '.65rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--accent)', border: '1px solid var(--accent)', borderRadius: '3px', padding: '.35rem .75rem' }}>
-              A-TEAM CARES
-            </span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', border: '1px solid var(--border)', borderRadius: '3px', padding: '.35rem .75rem' }}>
-              Still Delivering Excellence
-            </span>
-          </div>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '.01em' }}>
               Request a Trip →
