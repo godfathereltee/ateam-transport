@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Script from 'next/script'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import type { BookingRequest, TransportType, TripType } from '@/types'
@@ -50,6 +51,13 @@ export default function BookingPage() {
   const [showPickupWarning, setShowPickupWarning] = useState(false)
   const [pickupWarningConfirmed, setPickupWarningConfirmed] = useState(false)
   const [timeError, setTimeError] = useState('')
+  const [honeypot, setHoneypot] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
+
+  useEffect(() => {
+    (window as any).onTurnstileSuccess = (token: string) => setTurnstileToken(token)
+    return () => { delete (window as any).onTurnstileSuccess }
+  }, [])
 
   function set(field: keyof typeof initialState, value: string | boolean | null) { // eslint-disable-line @typescript-eslint/no-explicit-any
     setForm(prev => {
@@ -86,6 +94,8 @@ export default function BookingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (honeypot) return // silent bot rejection
+    if (!turnstileToken) { setError('Please complete the security verification below.'); return }
     if (!form.pickup_date) { setError('Please select a Date of Transport.'); return }
     if (!form.pickup_street || !form.pickup_city || !form.pickup_state || !form.pickup_zip) { setError('Please complete all Pickup Address fields.'); return }
     if (!form.destination_street || !form.destination_city || !form.destination_state || !form.destination_zip) { setError('Please complete all Drop-Off Address fields.'); return }
@@ -106,6 +116,7 @@ export default function BookingPage() {
           ...form,
           pickup_address: [form.pickup_street, form.pickup_room ? `Room ${form.pickup_room}` : '', form.pickup_city, `${form.pickup_state} ${form.pickup_zip}`].filter(Boolean).join(', '),
           destination_address: [form.destination_street, form.destination_suite ? `Suite ${form.destination_suite}` : '', form.destination_city, `${form.destination_state} ${form.destination_zip}`].filter(Boolean).join(', '),
+          turnstileToken,
           status: 'pending',
         }),
       })
@@ -357,6 +368,24 @@ export default function BookingPage() {
               </Field>
             </div>
           </section>
+
+          {/* Honeypot — hidden from humans, bots fill it */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={e => setHoneypot(e.target.value)}
+            style={{ display: 'none' }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+
+          {/* Turnstile */}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="cf-turnstile" data-sitekey="0x4AAAAAAElEr2KY6wmm_hfY" data-callback="onTurnstileSuccess" data-theme="dark" />
+          </div>
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
 
           {error && (
             <div style={{ padding: '.85rem 1rem', background: 'rgba(176,48,32,.09)', border: '1px solid var(--crit)', borderRadius: '4px', color: 'var(--crit)', fontSize: '.88rem' }}>

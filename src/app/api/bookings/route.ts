@@ -25,6 +25,17 @@ export async function POST(req: NextRequest) {
   try {
     const booking: BookingRequest = await req.json()
 
+    // Verify Turnstile token
+    const token = (booking as any).turnstileToken
+    if (!token) return NextResponse.json({ error: 'Missing security token' }, { status: 400 })
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: process.env.TURNSTILE_SECRET_KEY, response: token }),
+    })
+    const verifyData = await verifyRes.json()
+    if (!verifyData.success) return NextResponse.json({ error: 'Security verification failed' }, { status: 400 })
+
     const required = ['facility_contact_name', 'facility_contact_phone', 'confirmation_email',
       'patient_name', 'transport_type', 'trip_type', 'pickup_date',
       'pickup_address', 'destination_address']
