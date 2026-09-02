@@ -1,4 +1,5 @@
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'Privacy Policy | A-TEAM Transport Services',
@@ -135,6 +136,7 @@ export default function PrivacyPage() {
 
         </div>
       </div>
+      <Footer />
     </main>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 const S = {
   label: { fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase' as const, color: 'var(--text-3)', marginBottom: '1.75rem' },
@@ -210,17 +211,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ borderTop: '1px solid var(--border)', padding: '1.5rem', background: 'var(--bg)' }}>
-        <div style={{ ...S.wrap, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.6rem', color: 'var(--text-3)', letterSpacing: '.08em' }}>
-            A-TEAM TRANSPORT SERVICES · INDIANAPOLIS, IN · VETERAN-OWNED · EST. 2016
-          </div>
-          <Link href="/dashboard" style={{ fontFamily: 'var(--font-mono)', fontSize: '.6rem', color: 'var(--text-3)', textDecoration: 'none', letterSpacing: '.06em' }}>
-            STAFF LOGIN →
-          </Link>
-        </div>
-      </footer>
+      <Footer />
     </main>
   )
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 export default function JoinPage() {
   return (
@@ -51,7 +52,7 @@ export default function JoinPage() {
           </a>
         </div>
       </section>
-
+      <Footer />
     </main>
   )
 }

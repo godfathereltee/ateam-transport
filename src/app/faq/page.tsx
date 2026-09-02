@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 const faqs = [
   {
@@ -132,7 +133,7 @@ export default function FAQPage() {
           </div>
         </div>
       </section>
-
+      <Footer />
     </main>
   )
 }

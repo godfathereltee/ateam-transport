@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 import type { BookingRequest, TransportType, TripType } from '@/types'
 
 const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
@@ -390,6 +391,8 @@ export default function BookingPage() {
           </p>
         </form>
       </div>
+
+      <Footer />
 
       {showPickupWarning && (
         <div style={{

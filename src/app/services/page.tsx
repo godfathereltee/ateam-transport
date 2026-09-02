@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 const services = [
   {
@@ -113,7 +114,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
+      <Footer />
     </main>
   )
 }
