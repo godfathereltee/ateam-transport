@@ -417,7 +417,14 @@ function DatePicker({ value, onChange }: { value: string; onChange: (v: string) 
 
   return (
     <div style={{ display: 'flex', gap: '.4rem' }}>
-      <select style={{ ...sel, flex: 2 }} value={month} onChange={e => { setMonth(e.target.value); emit(e.target.value, day, year) }}>
+      <select style={{ ...sel, flex: 2 }} value={month} onChange={e => {
+        const newMonth = e.target.value
+        const maxDay = newMonth && year ? new Date(parseInt(year), parseInt(newMonth), 0).getDate() : 31
+        const safeDay = day && parseInt(day) > maxDay ? '' : day
+        setMonth(newMonth)
+        if (safeDay !== day) setDay('')
+        emit(newMonth, safeDay, year)
+      }}>
         <option value="">Month</option>
         {MONTHS.map((m, i) => <option key={m} value={String(i + 1)}>{m}</option>)}
       </select>
