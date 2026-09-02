@@ -278,7 +278,7 @@ export default function BookingPage() {
             <SectionLabel>Pickup Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
               <Field label="Pickup Address" required>
-                <input required value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="BRRH, 3050 N. Lintel Drive, Bloomington, IN 47404" />
+                <textarea required rows={2} value={form.pickup_address} onChange={e => set('pickup_address', e.target.value)} placeholder="BRRH, 3050 N. Lintel Drive, Bloomington, IN 47404" style={{ resize: 'none' }} />
               </Field>
               <YesNo label="Are there stairs at the pickup location?" required value={form.pickup_stairs} onChange={v => set('pickup_stairs', v)} />
               <Field label="Pickup Notes (room number, entrance, etc.)">
@@ -292,7 +292,7 @@ export default function BookingPage() {
             <SectionLabel>Drop-Off Details</SectionLabel>
             <div style={{ display: 'grid', gap: '.75rem' }}>
               <Field label="Drop-Off Address" required>
-                <input required value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="Glenburn Senior Living, 618 Glenburn Rd, Linton, IN 47441" />
+                <textarea required rows={2} value={form.destination_address} onChange={e => set('destination_address', e.target.value)} placeholder="Glenburn Senior Living, 618 Glenburn Rd, Linton, IN 47441" style={{ resize: 'none' }} />
               </Field>
               <YesNo label="Are there stairs at the drop-off location?" required value={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
               <Field label="Drop-Off Notes">
