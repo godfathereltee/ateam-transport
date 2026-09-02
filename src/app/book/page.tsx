@@ -198,9 +198,6 @@ export default function BookingPage() {
               <Field label="Patient Weight (lbs)">
                 <input type="number" value={form.patient_weight} onChange={e => set('patient_weight', e.target.value)} placeholder="150" style={{ maxWidth: '160px' }} />
               </Field>
-              <Field label="Name of Doctor (if known)">
-                <input value={form.doctor_name} onChange={e => set('doctor_name', e.target.value)} placeholder="Dr. Smith" />
-              </Field>
             </div>
           </section>
 
@@ -353,6 +350,9 @@ export default function BookingPage() {
               <YesNo label="Are there stairs at the drop-off location?" required value={form.dropoff_stairs} onChange={v => set('dropoff_stairs', v)} />
               <Field label="Drop-Off Notes">
                 <textarea value={form.dropoff_notes} onChange={e => set('dropoff_notes', e.target.value)} rows={2} placeholder="Pt may be dropped off at the front entrance." />
+              </Field>
+              <Field label="Name of Doctor (if known)">
+                <input value={form.doctor_name} onChange={e => set('doctor_name', e.target.value)} placeholder="Dr. Smith" />
               </Field>
             </div>
           </section>
