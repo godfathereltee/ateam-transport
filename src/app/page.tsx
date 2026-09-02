@@ -30,7 +30,7 @@ export default function Home() {
             Indianapolis&apos; original NEMT stretcher transportation company. We offer both stretcher and wheelchair passenger transportation for passengers living at home or in a nursing facility — excellence delivered with the dignity and professionalism every person deserves.
           </p>
           <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '2.5rem' }}>
-            Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities. Our commitment has never changed&hellip; &ldquo;A-TEAM CARES&rdquo;
+            Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities. Our commitment has never changed&hellip; &ldquo;<span style={{ whiteSpace: 'nowrap' }}>A-TEAM</span> CARES&rdquo;
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '.01em' }}>
