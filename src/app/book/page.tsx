@@ -384,7 +384,9 @@ export default function BookingPage() {
 
           <p style={{ fontSize: '.78rem', color: 'var(--text-3)', textAlign: 'center', lineHeight: 1.6 }}>
             By submitting this form you confirm you are authorized to arrange transportation for this patient.
-            A-TEAM Transport Services · Indianapolis, IN · Veteran-Owned
+            Information submitted is handled in accordance with our{' '}
+            <a href="/privacy" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Privacy Policy</a>.
+            <br />A-TEAM Transport Services · Indianapolis, IN · Veteran-Owned
           </p>
         </form>
       </div>
