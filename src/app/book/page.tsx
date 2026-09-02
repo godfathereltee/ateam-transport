@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -44,7 +45,11 @@ const initialState = {
 }
 
 export default function BookingPage() {
-  const [form, setForm] = useState(initialState)
+  const searchParams = useSearchParams()
+  const [form, setForm] = useState(() => ({
+    ...initialState,
+    facility_name: searchParams.get('facility') ?? '',
+  }))
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
