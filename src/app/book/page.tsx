@@ -303,7 +303,7 @@ export default function BookingPage() {
             <div style={{ display: 'grid', gap: '.75rem' }}>
               <div className="addr-row" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '.75rem' }}>
                 <Field label="Pickup Address" required>
-                  <input value={form.pickup_street} onChange={e => set('pickup_street', e.target.value)} placeholder="3050 N. Lintel Drive" />
+                  <textarea rows={2} style={{ resize: 'none' }} value={form.pickup_street} onChange={e => set('pickup_street', e.target.value)} placeholder="3050 N. Lintel Drive" />
                 </Field>
                 <Field label="Room #">
                   <input value={form.pickup_room} onChange={e => set('pickup_room', e.target.value)} placeholder="205" />
@@ -333,7 +333,7 @@ export default function BookingPage() {
             <div style={{ display: 'grid', gap: '.75rem' }}>
               <div className="addr-row" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '.75rem' }}>
                 <Field label="Drop-Off Address" required>
-                  <input value={form.destination_street} onChange={e => set('destination_street', e.target.value)} placeholder="618 Glenburn Rd" />
+                  <textarea rows={2} style={{ resize: 'none' }} value={form.destination_street} onChange={e => set('destination_street', e.target.value)} placeholder="618 Glenburn Rd" />
                 </Field>
                 <Field label="Suite #">
                   <input value={form.destination_suite} onChange={e => set('destination_suite', e.target.value)} placeholder="100" />
