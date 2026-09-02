@@ -90,6 +90,14 @@ export default function Home() {
               </a>
             ))}
           </div>
+          <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.75rem 1.75rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '.95rem' }}>
+              Request a Trip →
+            </Link>
+            <a href="tel:3179827417" style={{ border: '1px solid var(--border)', color: 'var(--text)', padding: '.75rem 1.75rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 600, fontSize: '.95rem', background: 'var(--bg)' }}>
+              Call (317) 982-7417
+            </a>
+          </div>
         </div>
       </section>
 
@@ -168,7 +176,8 @@ export default function Home() {
         <div style={S.wrap}>
           <div style={S.label}>Service Area</div>
           <p style={{ ...S.body, marginBottom: '1.5rem', maxWidth: '58ch' }}>
-            We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Indianapolis to Lafayette to Terre Haute. Fort Wayne to Bloomington to Jeffersonville.
+            We serve skilled nursing facilities, assisted living communities, and hospitals across Indiana — from Indianapolis to Lafayette to Terre Haute. Fort Wayne to Bloomington to Jeffersonville.{' '}
+            <Link href="/book" style={{ color: 'var(--accent)', textDecoration: 'underline', fontWeight: 600 }}>Request a trip from your area →</Link>
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
             {['Indianapolis', 'Greenwood', 'Carmel', 'Fishers', 'Lawrence', 'Beech Grove', 'Speedway', 'Plainfield', 'Avon', 'Brownsburg', 'Noblesville', 'Anderson', 'Columbus', 'Bloomington', 'Jeffersonville', 'Lafayette', 'Fort Wayne', 'Greenfield', 'Richmond'].map(city => (
@@ -193,6 +202,14 @@ export default function Home() {
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.1em', color: 'var(--accent)', textTransform: 'uppercase' }}>— {t.name}</div>
               </div>
             ))}
+          </div>
+          <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.75rem 1.75rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '.95rem' }}>
+              Request a Trip →
+            </Link>
+            <a href="tel:3179827417" style={{ color: 'var(--text-2)', textDecoration: 'none', fontSize: '.9rem', fontFamily: 'var(--font-mono)' }}>
+              or call (317) 982-7417
+            </a>
           </div>
         </div>
       </section>
