@@ -55,6 +55,16 @@ export const metadata: Metadata = {
     // Airport & extended service
     'airport transportation medical Indianapolis',
     'long distance medical transportation Indiana',
+    // Trip purpose keywords
+    'medical appointment transportation Indianapolis',
+    'dental appointment transportation Indianapolis',
+    'dialysis transportation Indianapolis',
+    'specialty treatment transportation Indiana',
+    'rehabilitation transportation Indianapolis',
+    'physical therapy transportation Indianapolis',
+    'routine medical visit transportation Indiana',
+    'follow-up care transportation Indianapolis',
+    'nursing facility discharge transportation Indiana',
     // Facility-facing keywords
     'NEMT provider for hospitals Indiana',
     'transportation for nursing facilities Indianapolis',
@@ -139,6 +149,15 @@ const jsonLd = {
     'Rehabilitation Transportation',
     'Airport Medical Transportation',
     'Non-Emergency Ambulance Alternative',
+    'Medical Appointment Transportation',
+    'Dental Appointment Transportation',
+    'Dialysis Transportation',
+    'Specialty Treatment Transportation',
+    'Rehabilitation Transportation',
+    'Physical Therapy Transportation',
+    'Routine Care Transportation',
+    'Follow-Up Care Transportation',
+    'Nursing Facility Discharge Transportation',
   ],
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
