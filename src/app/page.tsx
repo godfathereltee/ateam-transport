@@ -26,9 +26,20 @@ export default function Home() {
           <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 6vw, 4rem)', fontWeight: 700, lineHeight: 1.05, color: 'var(--text)', maxWidth: '14ch', marginBottom: '1.5rem', letterSpacing: '-.02em' }}>
             When your residents need to get there safely.
           </h1>
-          <p style={{ ...S.body, maxWidth: '52ch', marginBottom: '2.5rem' }}>
-            Indianapolis&apos; original NEMT stretcher and wheelchair passenger transportation service. Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities.
+          <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '1.25rem' }}>
+            Indianapolis&apos; original NEMT passenger stretcher transportation company. We offer both stretcher and wheelchair passenger transportation for passengers living at home or in a nursing facility — delivered with the dignity and professionalism every person deserves.
           </p>
+          <p style={{ ...S.body, maxWidth: '56ch', marginBottom: '1.75rem' }}>
+            Now celebrating 10 years of trusted relationships with Central Indiana&apos;s skilled nursing and assisted living communities. Our commitment has never changed: move every passenger safely, on time, and with genuine care — every trip, every time.
+          </p>
+          <div style={{ display: 'flex', gap: '.65rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--accent)', border: '1px solid var(--accent)', borderRadius: '3px', padding: '.35rem .75rem' }}>
+              A-TEAM CARES
+            </span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', border: '1px solid var(--border)', borderRadius: '3px', padding: '.35rem .75rem' }}>
+              Still Delivering Excellence
+            </span>
+          </div>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/book" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', padding: '.9rem 2rem', borderRadius: '4px', textDecoration: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '.01em' }}>
               Request a Trip →
