@@ -133,10 +133,14 @@ function BookingForm() {
           status: 'pending',
         }),
       })
-      if (!res.ok) throw new Error('Submission failed')
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Submission failed')
+      }
       setSubmitted(true)
-    } catch {
-      setError('Something went wrong. Please call us at (317) 982-7417 to request your trip.')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : ''
+      setError(msg && msg !== 'Submission failed' ? `Error: ${msg}` : 'Something went wrong. Please call us at (317) 982-7417 to request your trip.')
     } finally {
       setSubmitting(false)
     }

@@ -107,8 +107,8 @@ Drop-Off Notes:         ${booking.dropoff_notes || 'None'}
     })
 
     if (dbError) {
-      console.error('[SUPABASE ERROR]', dbError)
-      return NextResponse.json({ error: 'Failed to save booking' }, { status: 500 })
+      console.error('[SUPABASE ERROR]', JSON.stringify(dbError))
+      return NextResponse.json({ error: `Failed to save booking: ${dbError.message}` }, { status: 500 })
     }
 
     await resend.emails.send({
