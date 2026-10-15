@@ -7,6 +7,15 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import type { BookingRequest, TransportType, TripType } from '@/types'
 
+// Define the Turnstile callback at module scope so it's available before the
+// widget renders (trusted devices auto-verify instantly, before useEffect fires).
+let _turnstileCallback: ((token: string) => void) | null = null
+if (typeof window !== 'undefined') {
+  ;(window as any).onTurnstileSuccess = (token: string) => {
+    if (_turnstileCallback) _turnstileCallback(token)
+  }
+}
+
 const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
   { value: 'standard_wheelchair', label: 'Standard Wheelchair (up to 299 lbs)' },
   { value: 'bariatric_wheelchair', label: 'Bariatric Wheelchair (300+ lbs)' },
@@ -68,8 +77,8 @@ function BookingForm() {
   const [turnstileToken, setTurnstileToken] = useState('')
 
   useEffect(() => {
-    (window as any).onTurnstileSuccess = (token: string) => setTurnstileToken(token)
-    return () => { delete (window as any).onTurnstileSuccess }
+    _turnstileCallback = (token: string) => setTurnstileToken(token)
+    return () => { _turnstileCallback = null }
   }, [])
 
   function set(field: keyof typeof initialState, value: string | boolean | null) { // eslint-disable-line @typescript-eslint/no-explicit-any
