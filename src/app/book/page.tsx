@@ -7,14 +7,6 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import type { BookingRequest, TransportType, TripType } from '@/types'
 
-// Define the Turnstile callback at module scope so it's available before the
-// widget renders (trusted devices auto-verify instantly, before useEffect fires).
-let _turnstileCallback: ((token: string) => void) | null = null
-if (typeof window !== 'undefined') {
-  ;(window as any).onTurnstileSuccess = (token: string) => {
-    if (_turnstileCallback) _turnstileCallback(token)
-  }
-}
 
 const TRANSPORT_OPTIONS: { value: TransportType; label: string }[] = [
   { value: 'standard_wheelchair', label: 'Standard Wheelchair (up to 299 lbs)' },
@@ -77,8 +69,28 @@ function BookingForm() {
   const [turnstileToken, setTurnstileToken] = useState('')
 
   useEffect(() => {
-    _turnstileCallback = (token: string) => setTurnstileToken(token)
-    return () => { _turnstileCallback = null }
+    const container = document.getElementById('turnstile-container')
+    if (!container) return
+    const tryRender = () => {
+      if ((window as any).turnstile) {
+        ;(window as any).turnstile.render(container, {
+          sitekey: '0x4AAAAAAElEr2KY6wmm_hfY',
+          callback: (token: string) => setTurnstileToken(token),
+          'expired-callback': () => setTurnstileToken(''),
+          theme: 'dark',
+        })
+      }
+    }
+    if ((window as any).turnstile) {
+      tryRender()
+    } else {
+      ;(window as any).onloadTurnstileCallback = tryRender
+    }
+    return () => {
+      if ((window as any).turnstile && container) {
+        try { ;(window as any).turnstile.remove(container) } catch {}
+      }
+    }
   }, [])
 
   function set(field: keyof typeof initialState, value: string | boolean | null) { // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -409,9 +421,9 @@ function BookingForm() {
 
           {/* Turnstile */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className="cf-turnstile" data-sitekey="0x4AAAAAAElEr2KY6wmm_hfY" data-callback="onTurnstileSuccess" data-theme="dark" />
+            <div id="turnstile-container" />
           </div>
-          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async strategy="afterInteractive" />
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async strategy="afterInteractive" />
 
           {error && (
             <div style={{ padding: '.85rem 1rem', background: 'rgba(176,48,32,.09)', border: '1px solid var(--crit)', borderRadius: '4px', color: 'var(--crit)', fontSize: '.88rem' }}>
