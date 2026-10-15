@@ -17,6 +17,27 @@ export default function Home() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
+      {/* 10-Year Anniversary Banner */}
+      <div style={{
+        background: 'linear-gradient(90deg, #0a1628 0%, #0d2045 40%, #0a1628 100%)',
+        borderBottom: '2px solid var(--accent)',
+        padding: '.65rem 1.5rem',
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0, opacity: .07,
+          backgroundImage: 'repeating-linear-gradient(90deg, var(--accent) 0px, var(--accent) 1px, transparent 1px, transparent 60px)',
+        }} />
+        <p style={{
+          fontFamily: 'var(--font-mono)', fontSize: '.72rem', letterSpacing: '.18em',
+          textTransform: 'uppercase', color: 'var(--accent)', margin: 0, position: 'relative',
+        }}>
+          ★&nbsp;&nbsp;Celebrating 10 Years of Service to Central Indiana &mdash; Est. October 2016&nbsp;&nbsp;★&nbsp;&nbsp;&ldquo;<span style={{ whiteSpace: 'nowrap' }}>A-TEAM</span> CARES!&rdquo;&nbsp;&nbsp;★
+        </p>
+      </div>
+
       <Nav />
 
       {/* Hero */}
